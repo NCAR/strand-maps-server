@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SMS-CSIP xmlns="http://sms.dlese.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Error Code="123">
+		<Description/>
+		<Location LineNo=""/>
+		<PossibleProblems>
+		</PossibleProblems>
+	</Error>
+</SMS-CSIP>

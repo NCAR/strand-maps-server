@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Folder FolderName="XML Files" ExtStr="xml;cml;math;mtx;rdf;smil;svg;wml"/>
+	<Folder FolderName="XSL Files" ExtStr="xsl;xslt">
+		<File FilePath=".\Stylesheet\AttributeProcessing.xslt" HomeFolder="Yes"/>
+		<File FilePath=".\Stylesheet\Content-Query.xslt" HomeFolder="Yes"/>
+		<File FilePath=".\Stylesheet\Navigational-Query.xslt" HomeFolder="Yes"/>
+		<File FilePath=".\Stylesheet\ASNLookup-Query.xslt" HomeFolder="Yes"/>
+		<File FilePath=".\Stylesheet\Query Translator.xslt" HomeFolder="Yes"/>
+		<File FilePath=".\Stylesheet\util.xslt" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="HTML Files" ExtStr="html;htm;xhtml;asp"/>
+	<Folder FolderName="DTD/Schemas" ExtStr="dtd;dcd;xdr;biz;xsd">
+		<File FilePath=".\Common\CommonTypes.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\CSIP.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Common\enumeratedTypes.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Common\gem_type_v1.00.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Common\ObjectTypes.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Services\Query.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Services\RegisterQuery.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Common\RelationshipTypes.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Services\ServiceDescription.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\Common\SubjectTypes.xsd" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="Entities" ExtStr="ent"/>
+	<Folder FolderName="New Stylesheets" ExtStr="xslt"/>
+	<Folder FolderName="Sample Queries">
+		<Folder FolderName="Content">
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 11.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 12.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 13.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 14.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 15.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 16.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 17.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 18.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Conplex Content - Case 19.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case -1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case -2.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case -3.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 0.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 10.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 2.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 3.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 4.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 5.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 6.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 7.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 8.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Content\Simple Content - Case 9.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="Navigational">
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Complex Navigational - Case 17.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Complex Navigational - Case 18.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Complex Navigational - Case 19.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Complex Navigational - Case 20.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Complex Navigational - Case 21.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 10.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 11.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 12.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 13.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 14.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 15.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 16.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 2.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 3.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 4.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 5.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 6.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 7.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 8.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\Project\Protocol\Test Cases\Navigational\Simple Navigational - Case 9.xml" HomeFolder="Yes"/>
+		</Folder>
+		<File FilePath="C:\Documents and Settings\Faisal Ahmad\Desktop\Navigational test.txt" HomeFolder="Yes"/>
+		<File FilePath="C:\Documents and Settings\Faisal Ahmad\Desktop\query test.txt" HomeFolder="Yes"/>
+		<File FilePath="C:\Documents and Settings\Faisal Ahmad\Desktop\query.txt" HomeFolder="Yes"/>
+	</Folder>
+</Project>

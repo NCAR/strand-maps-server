@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright 2002-2005 Boulder Learning Technologies Lab & American Association for the Advancement of Science, 
+ DLC-1B20, Department of Computer Science, University of Colorado at Boulder,
+ CO-80309, Tel: 303-492-0916, email: fahmad@colorado.edu
+ 
+ This file is part of the Concept Map Service Software Project.
+ 
+ The Concept Map Service Project is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ 
+ The Concept Map Service OAI Project is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with The Concept Map Service System; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+ 
+ Author: Faisal Ahmad
+ Date  : Sept 14, 2005
+ email : fahmad@colorado.edu
+-->
+<xs:schema targetNamespace="http://sms.dlese.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://sms.dlese.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../Common/CommonTypes.xsd"/>
+	<xs:include schemaLocation="../Common/enumeratedTypes.xsd"/>
+	<xs:include schemaLocation="../Common/ObjectTypes.xsd"/>
+	<xs:include schemaLocation="../Common/RelationshipTypes.xsd"/>
+	<xs:include schemaLocation="../Common/SubjectTypes.xsd"/>
+	<xs:complexType name="RQT">
+		<xs:choice>
+			<xs:element name="SeeAllQueries" type="SeeAllQueriesType"/>
+			<xs:element name="Lookup" type="LookupType"/>
+			<xs:element name="Admin" type="AdminType"/>
+			<xs:element name="Functional" type="FunctionalType"/>
+			<xs:element name="Authentication" type="AuthenticationCode"/>
+		</xs:choice>
+		<xs:attribute name="CharacterEncoding" type="encodingType" default="UTF-8"/>
+	</xs:complexType>
+	<xs:complexType name="SeeAllQueriesType">
+		<xs:all>
+			<xs:element name="Operation" type="SeeAllOperations"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="LookupType">
+		<xs:all>
+			<xs:element name="Operation" type="LookupOperations"/>
+			<xs:element name="Term" type="StringTextType"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="AuthenticationCode">
+		<xs:all>
+			<xs:element name="Operation" type="authenticationCodeOperations"/>
+			<xs:element ref="PublishName"/>
+			<xs:element ref="AuthenticationCode"/>
+			<xs:element name="NewAuthenticationCode" type="AuthenticationCodeType"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="AdminType">
+		<xs:all>
+			<xs:element name="Operation" type="adminOperations"/>
+			<xs:element ref="PublishName"/>
+			<xs:element ref="AuthenticationCode"/>
+			<xs:element ref="ObjectType" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="FunctionalType">
+		<xs:all>
+			<xs:element name="Operation" type="functionalOperations"/>
+			<xs:element ref="PublishName"/>
+			<xs:element ref="AuthenticationCode"/>
+			<xs:element ref="QueryString"/>
+			<xs:element ref="QueryHost" minOccurs="0"/>
+			<xs:element ref="ObjectType"/>
+		</xs:all>
+	</xs:complexType>
+
+	<xs:element name="ObjectType" type="ObjectTypes" default="ALL"/>
+
+	<xs:complexType name="RegisteredQueryStringType" mixed="true">
+		<xs:choice maxOccurs="unbounded">
+			<xs:group ref="all"/>
+			<xs:element name="Group" type="GroupType" minOccurs="0"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:group name="all">
+		<xs:choice>
+			<xs:element name="Name" type="EMPTY" minOccurs="0"/>
+			<xs:element name="Source" type="EMPTY" minOccurs="0"/>
+			<xs:element name="ObjectType" type="EMPTY" minOccurs="0"/>
+			<xs:element name="AAASCode" type="EMPTY" minOccurs="0"/>
+			<xs:element name="Description" type="EMPTY" minOccurs="0"/>
+			<xs:element name="FullText" type="EMPTY" minOccurs="0"/>
+			<xs:element name="NarrativeStudentIdeas" type="EMPTY" minOccurs="0"/>
+			<xs:element name="NarrativeExamples" type="EMPTY" minOccurs="0"/>
+			<xs:element name="NarrativeAssessment" type="EMPTY" minOccurs="0"/>
+			<xs:element name="NarrativeInstructional" type="EMPTY" minOccurs="0"/>
+			<xs:element name="NarrativeClarification" type="EMPTY" minOccurs="0"/>
+			<xs:element name="IDNumber" type="EMPTY" minOccurs="0"/>
+			<xs:element name="GradeRanges" type="aEMPTY" minOccurs="0"/>
+			<xs:element name="Subjects" type="apEMPTY" minOccurs="0"/>
+			<xs:element name="Keywords" type="apEMPTY" minOccurs="0"/>
+			<xs:element name="InternalRelationship" type="aEMPTY" minOccurs="0"/>
+			<xs:element name="IDs" type="aEMPTY" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="skip" minOccurs="0"/>
+			<xs:element name="Standards" type="aEMPTY" minOccurs="0"/>
+			<xs:element name="StandardName" type="EMPTY" minOccurs="0"/>
+			<xs:element name="StandardGrades" type="EMPTY" minOccurs="0"/>
+			<xs:element name="StandardLink" type="EMPTY" minOccurs="0"/>
+			<xs:element name="StandardLevel" type="bEMPTY" minOccurs="0"/>
+			<xs:element name="ExternalResources" type="aEMPTY" minOccurs="0"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="bEMPTY">
+		<xs:complexContent>
+			<xs:extension base="EMPTY">
+				<xs:attribute name="Level" type="xs:integer" default="1"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GroupType" mixed="true">
+		<xs:complexContent mixed="true">
+			<xs:extension base="GroupTypeD">
+				<xs:attribute name="Repeat" type="xs:string" default="+OR+"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GroupTypeD" mixed="true">
+		<xs:sequence>
+			<xs:group ref="all" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="Paramaters">
+		<xs:all/>
+	</xs:group>
+	<xs:complexType name="aEMPTY">
+		<xs:complexContent>
+			<xs:extension base="EMPTY">
+				<xs:attribute name="Delimiter" type="xs:string" default="+"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="apEMPTY">
+		<xs:complexContent>
+			<xs:extension base="aEMPTY">
+				<xs:attribute name="Paran" type="xs:boolean" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="QueryString" type="RegisteredQueryStringType"/>
+	<xs:element name="QueryHost" type="StringTextType"/>
+	<xs:element name="PublishName" type="AuthenticationCodeType"/>
+	<xs:element name="AuthenticationCode" type="AuthenticationCodeType"/>
+	<xs:complexType name="QueryRegistrationResponseType">
+		<xs:sequence>
+			<xs:element name="Result" type="StringTextType"/>
+			<xs:element name="Message" type="xs:string"/>
+			<xs:element name="DLQuery" type="detailType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="detailType">
+		<xs:all>
+			<xs:element ref="PublishName"/>
+			<xs:element ref="QueryHost"/>
+			<xs:element ref="QueryString"/>
+			<xs:element name="Status" type="StatusType"/>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright 2002-2005 Boulder Learning Technologies Lab & American Association for the Advancement of Science, 
+ DLC-1B20, Department of Computer Science, University of Colorado at Boulder,
+ CO-80309, Tel: 303-492-0916, email: fahmad@colorado.edu
+ 
+ This file is part of the Concept Map Service Software Project.
+ 
+ The Concept Map Service Project is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ 
+ The Concept Map Service OAI Project is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with The Concept Map Service System; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+ 
+ Author: Faisal Ahmad
+ Date  : Sept 14, 2005
+ email : fahmad@colorado.edu
+-->
+<xs:schema targetNamespace="http://sms.dlese.org" xmlns="http://sms.dlese.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+		################################################################
+		#		This is version 0.0 of Record Subject Type Controlled Vocabulary 	#
+		################################################################
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:include schemaLocation="gem_type_v1.00.xsd"/>
+
+	<xs:simpleType name="DLESEType">
+		<xs:annotation>
+			<xs:documentation>
+			This simple type defines all subject types for the controlled vocabulary
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DLESE:Agricultural science"/>
+			<xs:enumeration value="DLESE:Atmospheric science"/>
+			<xs:enumeration value="DLESE:Biological oceanography"/>
+			<xs:enumeration value="DLESE:Biology"/>
+			<xs:enumeration value="DLESE:Chemical oceanography"/>
+			<xs:enumeration value="DLESE:Chemistry"/>
+			<xs:enumeration value="DLESE:Climatology"/>
+			<xs:enumeration value="DLESE:Cryology"/>
+			<xs:enumeration value="DLESE:Ecology"/>
+			<xs:enumeration value="DLESE:Educational theory and practice"/>
+			<xs:enumeration value="DLESE:Environmental science"/>
+			<xs:enumeration value="DLESE:Forestry"/>
+			<xs:enumeration value="DLESE:Geochemistry"/>
+			<xs:enumeration value="DLESE:Geologic time"/>
+			<xs:enumeration value="DLESE:Geology"/>
+			<xs:enumeration value="DLESE:Geophysics"/>
+			<xs:enumeration value="DLESE:History and philosophy of science"/>
+			<xs:enumeration value="DLESE:Human geography"/>
+			<xs:enumeration value="DLESE:Hydrology"/>
+			<xs:enumeration value="DLESE:Mathematics"/>
+			<xs:enumeration value="DLESE:Mineralogy or petrology"/>
+			<xs:enumeration value="DLESE:Natural hazards"/>
+			<xs:enumeration value="DLESE:Paleontology"/>
+			<xs:enumeration value="DLESE:Physical geography"/>
+			<xs:enumeration value="DLESE:Physical oceanography"/>
+			<xs:enumeration value="DLESE:Physics"/>
+			<xs:enumeration value="DLESE:Policy issues"/>
+			<xs:enumeration value="DLESE:Soil science"/>
+			<xs:enumeration value="DLESE:Space science"/>
+			<xs:enumeration value="DLESE:Structural geology"/>
+			<xs:enumeration value="DLESE:Technology"/>
+			<xs:enumeration value="DLESE:None of the above"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="vocabList">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DLESE"/>
+			<xs:enumeration value="NSDL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="SubjectType">
+		<xs:union memberTypes="DLESEType GEMType"/>
+	</xs:simpleType>
+	
+	<xs:complexType name="SubjectsType">
+		<xs:sequence>
+			<xs:element name="Subject" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="SubjectType">
+							<xs:attribute name="vocabSrc" type="vocabList" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

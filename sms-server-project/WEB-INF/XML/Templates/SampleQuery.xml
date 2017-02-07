@@ -1,0 +1,7 @@
+<SMS-CSIP xmlns="http://sms.dlese.org">
+	<Query DetailLevel="Skeleton" Scope="ALL" Format="SVG">
+		<Content-Query>
+			<ObjectID Depth="2">SMS-MAP-9001</ObjectID>
+		</Content-Query>
+	</Query>
+</SMS-CSIP>

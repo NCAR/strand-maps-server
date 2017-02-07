@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+	<head>
+		<title>SMS: Example 4</title>
+		<script type="text/javascript" src="@JSAPI_SERVICE_URL@/maps?api=v1"></script>
+		<link href="styles/styles.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="scripts/scripts.js"></script>
+	</head>
+	<body>
+		<div id="customHeader"><h1>Interactive Strand Map Viewer for High School Earth Science</h1></div>
+		<div id="contentArea">
+		
+		<div id="smsNavigation">
+			<form action="" method="get" id="smsBrowse" class="smsForm">
+				<select name="id" id="id">
+					<option value="">-- Select a Topic --</option>
+					<option value="SMS-GRD-2063">Use of Earth's Resources</option>
+					<option value="SMS-GRD-0047">Plate Tectonics</option>
+				</select>
+				<input type="submit" value="Go" id="submitBrowse"/>
+			</form>
+			<div id="smsMapName"></div>
+		</div>
+			<div id="strandMap" mapColor="#E6E6FA" highlightColor="plum" mapHeight="500" mapWidth="900"></div>
+			<div id="defaultContent" style="display:none;"><span class="titleText">Interactive Strand Map Viewer</span></nobr>
+				</p>
+				<p>
+					This example shows how to register for events that occur in the maps 
+					and insert and update content in the information bubble and tabs.
+				</p>
+				<p>
+					To use the interactive map viewer: Pick a topic from the list or search using your own terms. Maps of interrelated science or math concepts 
+					will be suggested and from each map you can find grade-appropriate classroom resources to help teach the 
+					desired concept and see the associated education standard.
+				</p> </div>
+		</div>
+	</body>
+</html>

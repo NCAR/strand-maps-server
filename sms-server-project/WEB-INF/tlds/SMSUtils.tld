@@ -1,0 +1,41 @@
+
+	<taglib>
+	
+		<tlibversion>1.0</tlibversion>
+		<jspversion>1.2</jspversion>	
+		<shortname>SMS</shortname>
+		<uri>http://cu.cs.sms.colorado.edu</uri>
+
+		<tag>
+			<name>DefaultHost</name>
+			<tagclass>cu.cs.bolt.sms.utils.setSMSHost</tagclass>
+			<bodycontent>empty</bodycontent>
+			<attribute>
+				<name>host</name>
+				<required>true</required>
+				<rtexprvalue>true</rtexprvalue>
+			</attribute>
+		</tag>
+
+		<tag>
+			<name>DefaultPort</name>
+			<tagclass>cu.cs.bolt.sms.utils.setSMSPort</tagclass>
+			<bodycontent>empty</bodycontent>
+			<attribute>
+				<name>port</name>
+				<required>true</required>
+				<rtexprvalue>true</rtexprvalue>
+			</attribute>
+		</tag>
+		<tag>
+			<name>DefaultPath</name>
+			<tagclass>cu.cs.bolt.sms.utils.setSMSPath</tagclass>
+			<bodycontent>empty</bodycontent>
+			<attribute>
+				<name>path</name>
+				<required>true</required>
+				<rtexprvalue>true</rtexprvalue>
+			</attribute>
+		</tag>
+	
+	</taglib>

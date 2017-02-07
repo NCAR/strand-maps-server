@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 	OPML that defines the menus. 
+		To rebuild the menu, pass the parameter 'treeCache=off' to the JSP page after editing and deploying this file.  -->
+<opml version="2.0" xmlns:trees="http://www.dlese.org/Metadata/ui/trees">
+	<head>
+		<title>SMS Documentation</title>
+		<trees:menu images="/cms1-2/docs/menu_images/triangles_bullets/" context="/cms1-2/docs/"/>
+		<dateModified>Tue, 23 May 2009 13:26:32 MDT</dateModified>
+	</head>
+	<body>
+		<outline text="Home" type="link" description="Science Literacy Maps Home" url="http://strandmaps.dls.ucar.edu/"/>
+		<outline text="Overview" type="link" description="SMS Documentation Overview" url="index.jsp"/>
+		<outline text="JavaScript API" type="link" description="Information about the SMS JavaScript API" url="jsapi/index.jsp">
+			<outline text="Documentation" url="jsapi/api_v1/index.jsp" type="link" />
+			<outline text="JSON Explorer" url="jsapi/api_v1/json_explorer.jsp" type="link" />			
+			<outline text="Image Explorer" url="jsapi/api_v1/image_explorer.jsp" type="link" />
+			<outline text="Example Code" url="jsapi/api_v1/example_clients/index.jsp" type="link" />
+		</outline>
+		<outline text="CSIP" type="link" description="Information about the CSIP Service" url="cms/cms1-2/index.jsp">
+			<outline text="Documentation" url="cms/cms1-2/CMS_specification.jsp" type="link"/>
+			<outline text="Explorer" url="cms/cms1-2/CMS_explorer.jsp" type="link"/>
+			<!-- <outline text="Query Validator" type="link" url="cms/cms1-2/Query_validator.jsp"/> -->
+			<outline text="CSIP Schema" type="group" description="Concept Space Interchange Protocol" url="cms/cms1-2/CMS_Schema.jsp"/>
+			<outline text="Concept Space Metadata Format" type="link" url="http://dlese.org/Metadata/strandmaps/index.htm"/>
+		</outline>
+	</body>
+</opml>

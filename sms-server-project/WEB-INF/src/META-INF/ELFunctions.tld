@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib 	xmlns="http://java.sun.com/xml/ns/j2ee" 
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd" 
+			version="2.0">
+
+	<description>
+		Expression Language (EL) function library implements functions
+		for use in JSP pages.
+	</description>
+	<display-name>SMS EL Function Library</display-name> 
+	<tlib-version>1.0</tlib-version>
+	<short-name>sf</short-name>
+	<uri>http://bolt.cs.colorado.edu/sms/tags/SMSELFunctions</uri>
+
+	<function>
+		<description>
+		  Gets a json string at the given jPath location.
+		</description>	
+		<name>jsonStringAt</name>
+		<function-class>edu.cu.cs.sms.json.JSONNode</function-class>
+		<function-signature>
+		  java.lang.String getJsonStringAt(java.lang.String,java.lang.String)
+		</function-signature>
+		<example>
+		 	Title is: ${sf:jsonStringAt(myJsonString,"data.title")}
+		</example>		
+	</function>
+
+	<function>
+		<description>
+		  Gets a List of json Strings at the given jPath location.
+		</description>	
+		<name>jsonListAt</name>
+		<function-class>edu.cu.cs.sms.json.JSONNode</function-class>
+		<function-signature>
+		  java.util.List getJsonListAt(java.lang.String,java.lang.String)
+		</function-signature>
+		<example>
+			&lt;c:forEach var=&quot;record&quot; varStatus=&quot;i&quot; items=&apos;${sf:jsonListAt(myJsonString,&quot;data.records&quot;)}&apos;&gt;
+				var record_no_${i.count} = &apos;${record}&apos;;
+			&lt;/c:forEach&gt;
+		</example>		
+	</function>
+	
+</taglib>

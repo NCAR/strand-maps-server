@@ -1,0 +1,18 @@
+/* This is an alternate version of styles used for pages when they are printed
+	(see "Print preview" in your browser).  This handles Tree Menus sites,
+	applying relative positioning for printability of long pages in Firefox.
+*/
+
+.dlese_treeMenuTable {
+	position: relative;
+}
+/* Page content TABLE menu TD: */
+.dlese_treeMenuTableCellMenu {
+	padding-top: 25px;
+	display: none;
+}
+/* Page content TABLE body text TD: */
+.dlese_treeMenuTableCellText {
+	padding-top: 18px;
+}
+

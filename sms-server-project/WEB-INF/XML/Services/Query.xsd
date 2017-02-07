@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright 2002-2005 Boulder Learning Technologies Lab & American Association for the Advancement of Science, 
+ DLC-1B20, Department of Computer Science, University of Colorado at Boulder,
+ CO-80309, Tel: 303-492-0916, email: fahmad@colorado.edu
+ 
+ This file is part of the Concept Map Service Software Project.
+ 
+ The Concept Map Service Project is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ 
+ The Concept Map Service OAI Project is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with The Concept Map Service System; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+ 
+ Author: Faisal Ahmad
+ Date  : Sept 14, 2005
+ email : fahmad@colorado.edu
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://sms.dlese.org" targetNamespace="http://sms.dlese.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../Common/CommonTypes.xsd"/>
+	<xs:include schemaLocation="../Common/enumeratedTypes.xsd"/>
+	<xs:include schemaLocation="../Common/ObjectTypes.xsd"/>
+	<xs:include schemaLocation="../Common/RelationshipTypes.xsd"/>
+	<xs:include schemaLocation="../Common/SubjectTypes.xsd"/>
+
+	<xs:complexType name="queryResponseType">
+		<xs:choice>
+			<xs:element name="SMS" type="smsType"/>
+			<xs:element name="TopicMap" type="xtm"/>
+			<xs:element name="WebOntologyLanguage" type="owl"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="smsType">
+		<xs:sequence>
+			<xs:element name="Record" type="sms" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="Number" type="xs:integer" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="queryType">
+		<xs:choice>
+			<xs:element name="Content-Query" type="cQueryType"/>
+			<xs:element name="Navigational-Query" type="rQueryType"/>
+			<xs:element name="ASNLookup-Query" type="aQueryType"/>
+		</xs:choice>
+		<xs:attribute name="DetailLevel" type="replyConfiguration" default="Skeleton"/>
+		<xs:attribute name="Scope" type="scopeType" default="ALL"/>
+		<xs:attribute name="Format" type="formatType" default="SMS"/>
+		<xs:attribute name="ThirdPartyQuery" type="xs:string"/>
+		<xs:attribute name="Color" type="xs:string" default="skyblue"/>
+		<!-- ALL= all queries, only valid with XML response; +=Delimiter-->
+		<xs:attribute name="ImageScale" default="100">
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:maxInclusive value="200"></xs:maxInclusive>
+					<xs:minInclusive value="1"></xs:minInclusive>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ConceptSize" default="3">
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:maxInclusive value="6"></xs:maxInclusive>
+					<xs:minInclusive value="1"></xs:minInclusive>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="scopeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(Benchmark|Strand|Grade group|Map|Cluster|Chapter|Atlas|Science for all americans paragraph|Section|ALL)(\+(Benchmark|Strand|Grade group|Map|Cluster|Chapter|Atlas|Science for all americans paragraph|Section|ALL))*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="rQueryType">
+		<xs:sequence>
+			<xs:group ref="robjGroup"/>
+			<xs:element name="Relation">
+				<xs:complexType>
+					<xs:group ref="rQueryGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="cQueryGroup">
+		<xs:choice>
+			<xs:element name="Name" type="aStringTextType"/>
+			<xs:element name="Source" type="aStringTextType"/>
+			<xs:element name="AAASCode" type="aStringTextType"/>
+			<xs:element name="Description" type="aStringTextType"/>
+			<xs:element name="FullText" type="aStringTextType"/>
+			<xs:element name="GradeRanges" type="aStringTextType"/>
+			<xs:element name="Subjects" type="aStringTextType"/>
+			<xs:element name="Keywords" type="aStringTextType"/>
+			<xs:element name="InternalRelationships" type="internalRelationType"/>
+			<xs:element name="ResourceRelationships" type="resourceRelationType"/>
+			<xs:element name="StandardRelationships" type="standardRelationType"/>
+			<xs:element name="NarrativeStudentIdeas" type="aStringTextType"/>
+			<xs:element name="NarrativeExamples" type="aStringTextType"/>
+			<xs:element name="NarrativeAssessment" type="aStringTextType"/>
+			<xs:element name="NarrativeInstructional" type="aStringTextType"/>
+			<xs:element name="NarrativeClarification" type="aStringTextType"/>
+			<xs:element name="Term" type="aStringTextType"/>
+			<xs:element name="AND" type="cAndOrNotType"/>
+			<xs:element name="OR" type="cAndOrNotType"/>
+			<xs:element name="NOT-AND" type="cAndOrNotType"/>
+			<xs:element name="NOT-OR" type="cAndOrNotType"/>
+			<!--			<xs:element name="AllObjects" type="EMPTY"/> -->
+			<!--			<xs:element name="ObjectType" type="aObjectTypes"/> -->
+		</xs:choice>
+	</xs:group>
+	<xs:group name="rQueryGroup">
+		<xs:choice>
+			<xs:element name="Any" type="EMPTY"/>
+			<xs:element name="Neighbor" type="EMPTY"/>
+			<xs:element name="Prerequisite" type="EMPTY"/>
+			<xs:element name="Post-Requisite" type="EMPTY"/>
+			<xs:element name="Is-closely-related-to" type="EMPTY"/>
+			<xs:element name="Is-part-of" type="EMPTY"/>
+			<xs:element name="Is-similar-to" type="EMPTY"/>
+			<xs:element name="Contributes-to-achieving" type="EMPTY"/>
+			<xs:element name="References" type="EMPTY"/>
+			<xs:element name="Is-associated-with" type="EMPTY"/>
+			<xs:element name="Is-referenced-by" type="EMPTY"/>
+			<xs:element name="Supports" type="EMPTY"/>
+			<xs:element name="Contributes-to-and-relies-upon" type="EMPTY"/>
+			<xs:element name="Needs-or-require" type="EMPTY"/>
+			<xs:element name="Contains" type="EMPTY"/>
+			<xs:element name="AND" type="rAndOrNotType"/>
+			<xs:element name="OR" type="rAndOrNotType"/>
+			<xs:element name="NOT-AND" type="rAndOrNotType"/>
+			<xs:element name="NOT-OR" type="rAndOrNotType"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="cQueryType">
+		<xs:choice minOccurs="0">
+			<xs:group ref="cQueryGroup"/>
+			<xs:group ref="cobjGroup"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:group name="robjGroup">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="IDType"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="aobjGroup">
+		<xs:sequence>
+			<xs:element name="ASNID" type="ASNIDType"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="aQueryType">
+		<xs:choice minOccurs="0">
+			<xs:group ref="aobjGroup"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:group name="cobjGroup">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="cobjIdType"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="rAndOrNotType">
+		<xs:sequence>
+			<xs:group ref="rQueryGroup" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cAndOrNotType">
+		<xs:sequence>
+			<xs:group ref="cQueryGroup" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="standardRelationType">
+		<xs:sequence>
+			<xs:element name="StandardRelationship" type="iStringTextType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="resourceRelationType">
+		<xs:sequence>
+			<xs:element name="ResourceRelationship" type="iStringTextType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="internalRelationType">
+		<xs:sequence>
+			<xs:element name="InternalRelationship" type="irStringTextType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cobjIdType">
+		<xs:simpleContent>
+			<xs:extension base="IDType">
+				<xs:attribute name="Depth" type="xs:integer" default="0"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="keyType">
+		<xs:sequence>
+			<xs:element name="Keyword" type="aStringTextType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="MatchType" type="matchTypeType" default="Equals"/>
+	</xs:complexType>
+	<xs:complexType name="subType">
+		<xs:sequence>
+			<xs:element name="Subject" type="SubjectType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="MatchType" type="matchTypeType" default="Equals"/>
+	</xs:complexType>
+	<xs:complexType name="gradeRangeType">
+		<xs:sequence>
+			<xs:element name="GradeRange" type="grType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!--		<xs:attribute name="MatchType" type="matchTypeType" default="Equals"/> -->
+	</xs:complexType>
+	<xs:complexType name="aStringTextType">
+		<xs:simpleContent>
+			<xs:extension base="StringTextType">
+				<xs:attribute name="MatchType" type="matchTypeType" default="Equals"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="irStringTextType">
+		<xs:complexContent>
+			<xs:extension base="EMPTY">
+				<xs:attribute name="Object" type="StringTextType" use="required"/>
+				<xs:attribute name="Relation" type="RelationshipTypes" use="required"/>
+				<xs:attribute name="MatchType" type="matchTypeType" default="Equals"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="iStringTextType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="MatchType" type="matchTypeType" default="Equals"/>
+			</xs:extension>
+			<!--				<xs:attribute name="Identifier" type="StringTextType" use="optional"/> -->
+			<!--				<xs:attribute name="Relation" type="RelationshipTypes" use="required"/> -->
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="aObjectTypes">
+		<xs:simpleContent>
+			<xs:extension base="StringTextType">
+				<xs:attribute name="MatchType" type="matchTypeType" default="Equals"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

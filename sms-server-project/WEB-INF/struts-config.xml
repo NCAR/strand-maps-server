@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    
+    <!-- ========== Data Source Configuration =============================== -->
+    <data-sources />
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans />
+    
+    <!-- ========== Global Exception Definitions ============================== -->
+
+    <global-exceptions>
+    	<exception	key="Exception.GeneralException" 
+    				type="java.lang.Exception"
+    				handler="edu.cu.cs.sms.Exceptions.Handlers.GeneralExceptionHandler"
+    				scope="request"
+    				bundle="edu.cu.cs.sms.Exceptions.ExceptionKeys.properties"
+    	/>
+    	<exception	key="Exception.XMLParseException" 
+    				type="org.xml.sax.SAXException"
+    				handler="edu.cu.cs.sms.Exceptions.Handlers.XMLParseExceptionHandler"
+    				scope="request"
+    				bundle="edu.cu.cs.sms.Exceptions.ExceptionKeys.properties"
+    	/>
+    </global-exceptions>
+   
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards>
+        <forward name="errorResponse" path="/error" />
+        <forward name="Response" path="/Response" />
+        <forward name="BinaryResponse" path="/BinaryResponse" />
+		<forward name="js-api-not-supported" path="/jsapi/error_pages/api_not_supported.jsp" />
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings>
+        <action path="/jsapi/map_images**" type="edu.cu.cs.sms.jsapi.JavascriptAction" validate="false"/>
+        <action path="/jsapi/xsvg**" type="edu.cu.cs.sms.jsapi.JavascriptAction" validate="false"/>
+		<action path="/jsapi/json" type="edu.cu.cs.sms.jsapi.JavascriptAction" validate="false"/>
+        <action path="/jsapi/maps" type="edu.cu.cs.sms.jsapi.JavascriptAction" validate="false">
+        	<forward name="map-js-v1" path="/jsapi/api_v1/strand_map_service_js.jsp" />
+        </action>
+        <action path="/jsapi/maps-impl" type="edu.cu.cs.sms.jsapi.JavascriptAction" validate="false">
+        	<forward name="map-js-impl-v1" path="/jsapi/api_v1/maps_js.jsp" />
+        </action>			
+    
+        <action path="/CacheException" type="edu.cu.cs.sms.Exceptions.Handlers.CacheExceptionHandler" validate="false" />
+        <action path="/ServiceDescription" type="edu.cu.cs.sms.ServiceDescriptionAction" validate="false"/>
+		<action path="/SubmitResource" type="edu.cu.cs.sms.SubmitResource" validate="false"/>
+		<action path="/RegisterQuery" type="edu.cu.cs.sms.RegisterQuery" validate="false"/>
+        <action path="/default" type="edu.cu.cs.sms.DefaultAction" unknown="true" validate="false" />
+        <action path="/error" type="edu.cu.cs.sms.ErrorResponseAction" validate="false" />
+        <action path="/Query" type="edu.cu.cs.sms.QueryAction" validate="false"/>
+        <action path="/Response" type="edu.cu.cs.sms.ResponseAction" validate="false"/>
+        <action path="/BinaryResponse" type="edu.cu.cs.sms.BinaryResponseAction" validate="false"/>
+    </action-mappings>
+    
+    <!-- ========== Controller Configuration ================================ -->
+    <controller />
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources key="Info" parameter="edu.cu.cs.sms.ApplicationResources" />
+    <message-resources key="ErrorCodes" parameter="edu.cu.cs.sms.ErrorCodes" />
+    <message-resources key="ErrorDescriptions" parameter="edu.cu.cs.sms.ErrorDescriptions" />
+    <message-resources key="Transfer" parameter="edu.cu.cs.sms.TransferKeys" />
+    <message-resources key="TagNames" parameter="edu.cu.cs.sms.XMLTagNames" />
+    <message-resources key="DLESEQuery" parameter="edu.cu.cs.sms.query" />
+    
+    <!-- ========== Plug Ins Configuration ================================= -->
+</struts-config>
+

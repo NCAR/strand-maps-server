@@ -1,0 +1,58 @@
+<html>   
+	<head>
+		<script type="text/javascript" src="@JSAPI_SERVICE_URL@/maps?api=v1"></script>
+		<script type="text/javascript" language="javascript">	
+
+			var smsCollections = new Array('439869');
+
+			// SMS objects used in this client:
+			var infoBubble = null;
+			
+			// On load, set up event listeners and actions on the Strand Map:
+			SMSEvent.addListener(StrandMap,"onload", setUpStrandMap);
+			function setUpStrandMap() {
+				infoBubble = StrandMap.getInfoBubble();	
+				// Set the maximum size of the bubble smaller than the default size:
+				StrandMap.getInfoBubble().setMaxSize(450,350);
+				
+				// Set the title of the info bubble:
+				StrandMap.getInfoBubble().setTitle("Benchmark Details");
+				
+				// Register a handler for when a benchmark is selected:
+				SMSEvent.addListener(StrandMap,"onbenchmarkselect",onBenchmarkSelect);
+				// Create the 'Resources' tab and set it's handler:
+				infoBubble.addBuiltinTab("toppicks","Top Picks");
+			}
+		
+			// When a benchmark is selected, update the InfoBubble with the default content:
+			function onBenchmarkSelect() {
+				StrandMap.getInfoBubble().setBuiltinContent("benchmarkdetails");
+				infoBubble.selectTab(_toppicksTab);
+			}
+		</script>
+		
+		<!-- Set up styles for viewing in an iframe -->
+		<style type="text/css">
+			body, #navigatorPane { 
+				background: #E9EFAA;
+			}
+			body { 
+				padding:0;
+				margin: 7 8 8 7;
+				border:0;
+			}
+			body, p, h1, h2, h3, h4, td, li  { font-family: Geneva, Arial, Helvetica, sans-serif; }
+		</style>
+		<!--[if IE]>
+			<style type="text/css">
+				body { 
+					margin:8;
+				}
+			</style>
+		<![endif]-->			
+	</head>
+	<body>
+		<!-- Display the map with a fixed size -->
+		<div id="strandMap" mapHeight="600" mapWidth="750"></div>
+	</body>
+</html>

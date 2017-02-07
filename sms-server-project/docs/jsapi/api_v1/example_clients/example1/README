@@ -1,0 +1,9 @@
+basic_tutorial.zip contains the demonstration html, css, and javascript files used in the 
+Basic Strand Maps Service tutorial located at the NSDL wiki: 
+https://wiki.nsdl.org/index.php/Community:StrandMaps/Training/Tutorial_Basic
+
+The Basic Strand Maps Service tutorial directly references basic_tutorial.zip file and the demonstration interface at:
+http://strandmaps.nsdl.org/cms1-2/docs/jsapi/api_v1/example_clients/example1/index.html
+
+Should either the zip file or the demonstration interface be moved from the location
+http://strandmaps.nsdl.org/cms1-2/docs/jsapi/api_v1/example_clients/example1/ please update the NSDL wiki tutorial.

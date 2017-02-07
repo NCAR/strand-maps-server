@@ -1,0 +1,368 @@
+Release notes, changes and version documentation for the 
+Strand Map Service. Current version @VERSION@
+
+-----------------------------------------------------------------------------
+
+Changes in v1.2.35 (released to production March 25, 2014)
+
+- Upgraded prototype to 1.7.1.0
+- Fixing the rest of the other IE < 9 errors, (region boxes not click able, drop down menu not working and
+  strands not showing up in benchmark pop up). The solutions were to upgrade prototype along with some
+  DOM changes, to make it work on all browsers.  
+- Fix hasOwnProperty error that seems to be causing errors on ie browsers older then ie 9
+- Fixed Android issue of tabs showing up three times. This was caused because of the issue on android browsers where a image
+onload even is called three times. Fixed it by listening for the event via prototype instead.
+- Fixed open files problem, "Too many files open" error 
+
+Changes in v1.2.33 (released to production Feb 10, 2014)
+- Re-organized example_clients folder so the examples are in order and the example number matches the 
+  files being used. 
+
+- Wordsmithing of documentation that was added in v1.2.34 to make it clearer.
+
+- Updates to example client1 to make the colors and bubble sizes the same as the NSDL client
+
+Changes in v1.2.33-rc2
+- Updated /bubble/resources.jsp to be more flexible so it can be used for all NSDL tabs. Instead
+  of having one for each nsdl resource tab.
+  
+- Added new built in tab called nsdltoppicks. Which displays all nsdl aligned/related resources for
+  a benchmark ordered by most relevant up top. The label for tab will include the resource total count
+  
+- Removed the tabs nsdlaligned and nsdlrelated from documentation so future clients do not use them anymore
+  and instead use nsdltoppicks
+  
+- Added new event to StrandMap called onbenchmarkclose. Which is called when a benchmark is closed. 
+  This was then implemented within tabs, so content can be cleared once a benchmark is closed.
+ 
+- Added appendToLabel and changeLabel methods to InfoBubbleTab class so the labels can be dynamically 
+   updated, ie total resource counts
+   
+- Removed event onimageload from StrandMap and moved onload into its place. Therefore there is only
+   one event clients have to worry about before accessing any StrandMap methods.
+   
+- Combined example1 and example2 together to create a common example for clients to use. 
+  
+Changes in v1.2.33-rc1
+- Removing orphan maps, sections and chapters from the database file. To both clean up and the data and
+  prevent issues from happening if a client figured out the ids of the orphaned children
+
+Changes in v1.2.32 (release to production Jan 22, 2014)
+- Ability to insert text or other HTML content into the interactive maps is 
+now avaialble from the JavaScript API
+-- New method setMapObjectAnnotation allows a developer to insert text or other HTML content
+next to objects in the maps including the benchmarks, text labels (grade bands and strand names),
+or anchored to absolute regions (top, left, right, bottom, etc.) on the map or map image.
+-- Example client 2 illustrates this new method by displaying the total numeber of NSDL
+resources next to each benchmark, grade band, and strand in the map.
+
+
+Changes in v1.2.31 (released to production Jan 13, 2014)
+- Mobile/Touch screen compatibility implemented for the interactive map interface (tested with iPad/iOS 7)
+-- Touch-drag now works properly in the map visualizations
+-- Map select menu interaction improved for touch compatibility
+-- Size of hot spots and links expanded to work better with touch screens
+- Strands and grades are now hot-linked in the visualizations
+-- Hover-over strands and grades shows underline that indicates it is linked
+-- Clicking on a strand or grade brings up the strand/grade visualization
+-- Breadcrumbs in the UI now show the full path starting with Chapter > Map > Strand|Grade
+- Strands are now available for display in the Benchmark InfoBubble
+-- Shows/links all strands that the Benchmark resides in
+- Rounded corners for the Benchmark hover-over boxes (previously square)
+- Internet Explorer bug fixes
+-- Fixed persistent hover link lines that appeared around the benchmarks
+-- IE-specific spacing implemented for hover-lines display
+
+Changes in v1.2.31-rc2 (released to test Dec 6 2013)
+- Visualization engine improvements:
+-- Add code to fix diagonal lines that cross each other.
+-- This was added after v1.2.31, since we needed the architecture first
+
+Changes in v1.2.31-rc1 (released to test Dec 6 2013)
+- Visualization engine improvements:
+-- Changed algorithm to use strand alignments and then combining the strands instead of caches and fudge factors
+-- Fixed issue when a benchmark is part of more then one strand in a map but the strands are not side by side. Instead
+   now we average the position in the middle
+-- Got rid of issue where spacing was randomly found in the map. Now all strands start from the beginning of their area since the strand
+   widths are calculated dynamically. 
+-- Fixed issue of benchmarks sometimes overlapping each other.
+
+Changes in v1.2.30 (released to producation Nov 8 2013)
+- Visualization engine improvements:
+-- Changed the default font to DejaVu LGC Sans for improved readability (tested 8 different fonts with 13 users before arriving at this one). 
+Requires the dejavu-lgc-fonts.noarch be installed on Linux to pull these in.
+-- Changed the heuristic for placement of benchmarks slightly to reduce the occurance of overlapping edges in the Maps
+-- Fixed bug where some benchmarks were appearing under the wrong strand. When a given grade
+band did not have a benchmark under a given strand, all benchmarks for that band were
+shifted left. This has now been fixed.
+-- Renamed the Java class for the visualization engine from my_process_old to Visualization
+- Implemented persistent cache of CSIP responses to improve response times for page and image loads. Cache refreshes when a
+newer version of the DB file (strandmap.sql) is deployed. Cache files can/should be deleted to refresh if other
+changes are made in the vizualization engine.
+- Updated code to run in Tomcat 6
+-- Changed build.xml to point to the new directory structure for tomcat so it can be built with
+newer versions of tomcat (TC6). 
+-- Added in stub methods to myResultSet so it can compile correctly for Java 6
+
+Changes in v1.2.29 (released to production Aug 29 2013)
+- New NGSS InfoBubble tab showing NGSS standards that are aligned to a given Benchmark. Includes alignments from SMS ID to NGSS ASN ID.
+
+Changes in v1.2.28 (released May 20, 2013)
+- map queries for only a bm id (no map id provided) will use the same functionality as the providing asnid only to pull up a map with that benchmark highlighted.  Code traverses up to the first MAP associated with the benchmark.
+
+Changes in v1.2.27 (released May 9, 2013)
+- map queries for asnid that have a corresponding SMS-BMK in the database will pull up a map with that benchmark highlighted.  Code traverses up to the first MAP associated with the benchmark.  This is based off of a programatic matching of ASN ID text to SMS-BMK text and we're still waiting for the officially correlated list from Brian Sweeney of AAAS.
+
+Changes in v1.2.26 (released Apr 16, 2013)
+- added a new db table that matched ASN IDs to the SMS-BMK IDs where available.  Also includes
+  partial implementation of new features based off of these matches that includes them in response XML.  
+  Will need to be re-looked at when final list of actual ASN-to-SMS IDs are available.
+
+Changes in v1.2.25 (released Nov 9, 2012)
+
+-Updated the SMS DB with a number of changes submitted by AAAS
+
+-Removed a list of relationahip exclusions that were hard-coded in the 
+vizualization engine and implemented a database driven mechanism to 
+specify specific relations to omit on given maps (new column specifies maps
+black-listed maps). Partially addresses an issue where relationship edges
+overlap and obsucre each other when passing through intermediate
+benchmark nodes along the same path as other relations.
+
+
+Changes in v1.2.24 (released June 14, 2012)
+
+-Two new built-in tabs are now available for the InfoBubble:
+--Assessments - Dispalys AAAS assessments for the given Benchmark, when available
+--Misconceptions - Displays AAAS miconcetpions for the given Benchmark, when available
+
+-Added ability to set a minimum width for the InfoBubble, which is useful
+to prevent tabs from wrapping when many of them are used
+
+-Added context param to allow configuration of the aaasAssessmentsBaseURL used to pull in content for the AAAS
+assessments and misconceptions tabs (defaults to 'http://assessment.aaas.org')
+
+
+Changes in v1.2.23 (released April 4, 2012)
+
+-Added link to 'PDF of map' in the map title bar to make it easier to access.
+
+-Fixed ouput from OAI data provider. XML is now well-formed (fixed null pointer in myResultSet.java)
+
+-Fixed improperly encoded characters in three benchmarks.
+
+-Positioned the sub-menus in the 'Browse Topics' menu slightly higer to make them more accessible.
+
+
+Changes in v1.2.22 (released Jan 28, 2012)
+
+-Addressed issues associated with running SMS on the Rackspace server:
+--Fixed intermittent error in JSON service responses and SVG-JSON CSIP responses, which were returning empty SVG strings in certain cases
+--Reduced the maximum MySQL connection pool size to 30 (previously set to 200)
+--Fixed issue with the database tables being dropped when the service was stopped and then restarted. 
+The database is no longer dumped to the strandmap.sql file upon shutdown, which was causing the file to be deleted.
+--Upgraded to Tomcat 5.5.35 (addresses a DOS vulnerability), tested and deployed to dev and production servers
+
+-Improved error messages reported in service responses, for example to indicate the specific errors found when an invalid query was
+supplied by the client.
+
+
+Changes in v1.2.21 (released June 30, 2011)
+- Ensured that the list of maps that a benchmark appears in is displays properly in the bubble
+with the current map unlinked and all others linked, including in the related benchmarks
+view
+
+- Fixed bug where the tabs in the bubble shifted to the right when the user zoomed 
+in or out with their browser [+|-]
+
+- Moved sub menu in the global map selector slightly higher
+
+
+Changes in v1.2.20 (released June 20, 2011)
+- Updated code examples
+
+Changes in v1.2.19 (released June 14, 2011)
+- Added an option for the map selector widget to show a multi-level selection menu that includes the topics with each map shown in a sub-menu.
+- Added a new built-in content type for the infoBubble that displays all maps that contain the given benchmark.
+- Modified the wording a bit in the Search dialogs
+- Updated JS API documentation with the above new features and included them in example client 1
+- Removed underlines from the text that appears in the map images (strand names, grades, etc).
+
+Changes in v1.2.18  (released May 6, 2011)
+- added functionality to define which collection(s) to search over by adding a JS array for smsCollectionsRelated or smsCollectionsAligned 
+containing the IDs for the collections to search over.  Updated example 6 to demonstrate this.  
+
+Changes in v1.2.17 (released April 21, 2011)
+- Changed the Search webservice to be the DDS as opposed to the NSDL NDRSEARCH.  Updated Xpaths to correspond to the new results XML format.
+- Changed HTTP User-Agent header for tabs in the JS bubble UI to be 'Strand Map Service (JS API)'
+
+Changes in v1.2.16 (released Nov 16, 2010)
+- related resources tab in bubble will gets the bm keywords, subjects, grades and the corresponding strand keywords 
+internally.  All that needs to be provided is the bmid and map id. This allows the 
+tab content to be embedded easily into other web pages. Used in the Utah study list view page.
+
+Changes in v1.2.15 (released Oct 22, 2010)
+- fixed spelling mistakes in a number of sections, and added missing AAAS codes
+- removed duplicate benchmark SMS-BMK-1990, kept SMS-BMK-1655 and reconnected it
+
+Changes in v1.2.14 (released Oct 5, 2009)
+- updated JavaScript client example 2 (coordinates with a new tutorial in the NSDL Wiki)
+- added more details about each object in the JS API documentation page
+
+Changes in v1.2.13 (released Sept 3, 2009)
+- added 'AAAS' and clarification to service documentation in a few places to make it more clear that the services
+(currently) operate over AAAS maps only and do not allow creation of new maps, only 
+the insertion of custom content into the existing AAAS map bubble
+
+Changes in v1.2.12 (released Jan 27, 2009)
+- added a link to a PDF of the map in the print view
+- refactored the 'Link to this page' link in the UI to show a dialog box with a link to the
+page view instead of directly refreshing the browser to the link
+- clarified the verbiage in tooltips and labels for the print and link to page items
+- 'Print view' and 'Link to this page' links are now displayed only when the interactive
+map is visible rather than in all SMS page views
+- fixed return value from StrandMaps.getReferringMapId() method, which was not returning
+a valid ID
+
+Changes in v1.2.11 (released Sept 5, 2008)
+- added approx 40 new maps and two new chapters from Atlas II
+- JS API changes: Added student misconceptions display option in the maps and print view; ability to show/hide 
+individual tabs or the entire tab pane; ability to display a 'Loading...' message for the tab pane.
+- migrated CVS code base from the strandmapservic project at SourceForge to dlsciences at SourceForge on 7/18/2008
+- updated visualization renderer to handle some issues in the new maps
+- fixed rendering of bubble background image in Firefox 3 (switched from using getElementsByClassName to $$ prototype method)
+- fixed Firfox 3 transparency problem in map navigator
+- polished the print view and print sequence a bit
+- refactored the JavaScript loader to place static Javascript into browser-cacheable script files
+to improve overall performance for users on slower networks
+- identified and fixed a problem with threads deadlocking in the SMS response caching routine (Store.java), 
+which was causing the server to hang
+
+
+Changes in v1.2.10
+- fixed rendering/positioning of strands labels in the map visualizations (Gravity map example)
+
+Changes in v1.2.9 (released)
+- enabled arrow key movement of strandmap
+- added new contentType for setBuiltinContent function: benchmarkOnly that does not include standards in the main bubble content area
+- added new tabType for addBuiltinTab function: nses that includes current NSES standards in a new tab
+
+
+Changes in v1.2.8
+- moved the main code branch back to the HEAD instead of the 'Release' branch
+
+Changes in v1.2.7 (released Oct 24, 2007)
+- release of public JavaScript API v1.0 (beta)
+- implemented support for Safari
+- created documentation for the JS API
+- created example code/clients for JS API
+- copied CSIP documentation into this project, linked to docs area with JS API
+- added OAI provider to the server, with baseUrl and access documentation
+- added arrows panning widget for map navigation
+- added CSIP and JS API methods for setting the scale of images from 1% to 200%
+- added CSIP and JS API methods for setting the size of the concept boxes
+- made a text only browser version to enhance accessibility focusing on the individual benchmark view to show interrelations
+- changed look of nav widget and adjusted spacing
+- added a paged based navigation to enable quicker access to lower pages - request from resource reviewers
+- fixed page-based index - better checking for edge conditions
+- included three more exclusive queries for testing per Cornell request (decision to have fewer results)
+- concept maps now contain the full text of the AAAS benchmark
+
+Changes in v1.2.6 (released April 20, 2007)
+
+- fixed test query 5 and 6 to check map id for corresponding strand keywords and assure all relevant strand keywords are included
+- updated bm.jsp to pull Standards with change in xpath (former: Strandards)
+
+-Added query that boosts all strand keywords for Mike to test.  Also searches in compoundSubject for 
+grade level 
+- refine audience to separately remove graduate and postsecondary resources - was pulling in do to conditions in subject field
+
+-CSIP: Fixed description metadata field and spelling of the word 'standards'
+
+-Fixed a number of database issues identified on 4/13 and 4/18 (spelling errors, missing data, etc.)
+
+-Ensure 'Link to this page' href is correct in IE when mouse is clicked
+
+-Hide link to 'Return to interactive map' in print view page when @media=print
+
+
+Changes in v1.2.5 (released April 16, 2007)
+
+-Added display of topic/chapter in the blue bar. 
+
+-Changed bubble title to 'Concept Details'
+
+-Changed title to relfect the orignal page title before the topic/concept map name
+
+-Small changes in css on a couple elements
+
+-Added DataAccessBean to access data from SMS DB. 
+
+-Added EL Tags to parse and access json in JSPs.
+
+
+Changes in v1.2.4
+
+-adjusted test query logic.  Removed check for map name within the strand full text because not all of the 
+strands include the map name.
+
+- removed results that contain 'graduate' or 'postsecondary' as audience for K-8 areas.  Take care of resources that
+have the whole range of possible gradelevels in their metadata
+
+- added a fourth test query that uses boosting for the first keyword for map, strand and bm.
+
+-Print view: Set width/height for related benchmarks and applied common_stylle.css
+
+-Set 'Link to this page' href explicitly on mouseover to enable link actions from browser
+context menus such as 'Copy link location', 'Open link in new window', 'Bookmark this link', etc.
+
+
+Changes in v1.2.3 
+
+-Auto display standards. If in print mode - keep displaying, if in non-print mode, hide standards.
+
+-Bug fix: related benchmarks now correctly displaying resources - had to pass the parent map id when
+opening related benchmarks in the interactive viewer
+
+-Added display of related benchmarks in print view and ensured that all images are loaded
+before window.print called
+
+-Ensure 'Link to this page' works in topic view in IE
+
+
+Changes in v1.2.2
+
+-Added print and 'link to this page' functionality
+
+-Added an in-line Safari 'not supported' message for Mac users, 
+with a link to download Firefox
+
+
+Changes in v1.2.1 (released April 4, 2007)
+
+-Changed maplist highlight color to a pleasing green.
+
+-Fixed issue where IE 6 would hang the first time a user opened a map
+in the AJAX interface. Removed gzip compression for images (.jpg, .gif, .cur), 
+which IE does not properly support.
+
+-Fixed 'processMapJson' error thrown in IE6
+
+-Changes and updates in the NSDL search algorithms
+
+-Added testing parameter to allow side-by-side comparison
+of multiple search algorithms in the map browser
+
+-Small changes in css, html
+
+
+Changes in v1.2.0 (released March 23, 2007)
+
+-Introduced the JavaScript AJAX API, beta, for use in the NSDL client.
+This API will be developed into a general API that can be used to 
+insert and customize interactive concept maps into any HTML client
+
+-Added all maps completing AAAS Atlas volume one, plus a few from
+volume two
+
+

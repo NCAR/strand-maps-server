@@ -1,0 +1,39 @@
+
+/* Tweak the dlese_styles css to work with HTML that was imported form the old Swiki */	
+TD { font-size:100%; }
+H1 { margin-left: 0px; padding-left: 0px; margin-bottom: 10px; margin-top: 5px; }
+H2 { 
+	font-size: 140%;
+	font-style: normal;	
+	margin-left: 0px; 
+	padding-left: 0px; 
+	margin-bottom: 10px; 
+	margin-top: 5px;	
+}	
+H3 { margin-left: 0px; padding-left: 0px; margin-bottom: 10px; margin-top: 5px; }
+H4 { margin-left: 0px; padding-left: 0px; margin-bottom: 10px; margin-top: 5px; }
+UL { 
+	padding-left: 7px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	margin-left: 16px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+LI { 
+	padding-top: 4px;
+	padding-bottom: 4px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+PRE {
+	font-size: 110%;	
+}
+input.rqbutton 
+{
+	margin:5px;
+	font-size:70%;
+}
+
+
+ 

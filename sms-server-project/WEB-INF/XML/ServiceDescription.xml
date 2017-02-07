@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SMS-CSIP xmlns="http://sms.dlese.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<ServiceDescriptionResponse>
+		<Version majorNo="1" minorNo="2">Strand Map Service Server</Version>
+		<SupportedConfigurations>
+			<Configuration>Skeleton</Configuration>
+			<Configuration>Detailed</Configuration>
+		</SupportedConfigurations>
+		<SupportedQueryTypes>
+			<Query>Content-Query</Query>
+			<Query>Navigational-Query</Query>
+			<Query>ASNLookup-Query</Query>
+		</SupportedQueryTypes>
+		<SupportedOperators>
+			<Operator>Logical</Operator>
+			<Operator>Relational</Operator>
+		</SupportedOperators>
+		<SupportedReplyFormats>
+		</SupportedReplyFormats>
+		<SupportedLibrarySearch/>
+		<SupportedExtensions/>
+	</ServiceDescriptionResponse>
+</SMS-CSIP>

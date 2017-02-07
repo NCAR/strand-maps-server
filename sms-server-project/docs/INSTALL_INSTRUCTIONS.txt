@@ -1,0 +1,212 @@
+Installation instructions for the Strand Map Service (SMS).
+------------------------------------------------------------------
+
+The Strand Map Service (SMS) is a Web application that runs in
+a Tomcat Servlet container on Windows, Mac OSX, Linux or other Unix variants.
+These instructions describe how to build, install and run the service.
+
+Required tools and components to install and run SMS:
+
+-Tomcat v6.x
+Apache Tomcat is an open source software implementation of the Java Servlet and JavaServer Pages technologies. 
+http://tomcat.apache.org/
+
+-MySQL v5.x
+MySQL is a popular Open Source SQL database.
+http://www.mysql.com/
+
+-Java version 6
+The Java runtime environment.
+http://java.sun.com/
+
+-Ant build tool 
+Apache Ant is a Java-based build tool similar to make.
+http://ant.apache.org/
+
+-CVS client
+CVS is a mature version control and software repository system. CVS clients typically come pre-installed
+on Linux and Unix system. TortoiseCVS is a nice Open Source client for Windows:
+http://www.tortoisecvs.org/
+
+
+Step-by-step instructions:
+
+1. Obtain and install each of the tools and components listed above under 'Required tools and components'.
+Pay close attention to the required versions - they do matter.
+
+
+2. Set up a MySQL user that has read/write privileges to create and drop tables and data
+for the database schema 'smsserver'. The SMS software will populate the database tables when loaded.
+Note the username and password, which will be used later.
+
+
+3. Obtain the SMS server module 'sms-server-project' from the DLSciences SourceForge CVS repository.
+Follow the instructions here for anonymous CVS access:
+http://sourceforge.net/scm/?type=cvs&group_id=198325
+
+Check out the module 'sms-server-project'
+
+Place the module into a folder that will serve as a staging area to build and
+deploy the software to Tomcat. We'll refer to this folder as the 'staging area'.
+
+
+4. Create a text file named 'build.properties' and save it to the staging 
+area. 
+
+The staging area should contain: 
+
+	sms-server-project - The SMS module folder
+	build.properties - A text file that defines properties used in the Ant build
+
+
+Copy and paste the following properties into the build.properties text file.
+Edit the file and replace the example/default values with ones that apply to your
+installation:
+
+# The directory path to your Tomcat installation
+BoLT.tomcat.home=/usr/local/tomcat
+
+# The MySQL user name
+BoLT.db.Driver.User=user_xxx
+
+# The MySQL user password 
+BoLT.db.Driver.Password=xxxx
+
+# The MySQL database schema name (change only if different)
+BoLT.db.Driver.database=smsserver
+
+# The local host name for your Tomcat server
+BoLT.cmsServerHost=localhost
+
+# The local port for your Tomcat server (Tomcat default is 8080)
+BoLT.cmsServerPort=8080
+
+# The global Web address for your Tomcat server. If the Tomcat
+# server is only available locally, use the local host and port name instead
+BoLT.global.host.port.url=http://www.mydomain.org:8080
+
+# The global Web address for the SMS JavaScript service on your server
+# The value here works by simply using the same setting as above
+# and adding the appropriate path:
+jsapi.clients.service.url=${BoLT.global.host.port.url}/cms1-2/jsapi
+
+# (optional) The e-mail address used as a contact for OAI. This is only needed if you 
+# intend to use OAI
+oai.admin.email=username@mydomain.org
+
+
+Tip: If you change the settings in build.properties after the software has
+been deployed, issue the 'clean' and then 'deploy' Ant targets to apply the 
+new settings in the software build (see below about Ant).
+
+
+5. Build and deploy the SMS software using Ant
+
+Note that Ant must be configured to use a Java 5 JVM to work for SMS.
+
+To perform the build and deployment, issue the Ant target 'deploy'
+
+To do this using the command-line Ant tool on Linux/Unix machines,
+cd into the sms-server-project folder. Then type: 
+
+ant deploy
+
+Read the output from Ant. If any errors occur, address them. Upon 
+successful deployment you should see a message from Ant like:
+
+	BUILD SUCCESSFUL
+	Total time: 26 seconds
+	
+
+The deploy target builds the software and deploys it directly into
+the Tomcat container inside its 'webapps' folder. 
+The SMS context name is /cms1-2
+	
+Tip: The file build.xml at the root of the module defines the Ant build
+and targets. See that file for further notes about building the software.
+Issue the Ant project help command to see other targets that are 
+available and what they are used for:
+
+ant -p
+
+	Main targets:
+	
+	 all                    Clean build dir, then compile
+	 clean                  Delete the build directory
+	 clean-tomcat-work      Delete the Tomcat work directory
+	 cleanall               Clean the build and junit test directories
+	 compile                Compile Java sources
+	 compile-dlese-tools    Generate a fresh DLESETools.jar for this application (optional)
+	 deploy                 Deploy application to servlet container
+	 deploy-clean           Delete the Tomcat deploy directory
+	 deploy-jsp             Deploy only jsp, js, html, css, xml and image files to Tomcat
+	 javadoc                Generate Javadoc this application
+	 javadoc-dlese-tools    Create Javadoc documentation for DLESE Tools library (optional)
+	 junit                  Run JUnit tests
+	 prepare                Prepare the build area by copying in the web and docs dirs.
+	 remove-obsolete-files  Removes files that are no longer needed in the deployment area
+	 war                    Creates a WAR file that can be used for internal application deployment
+	Default target: compile
+
+
+6. Start and verify the SMS server
+
+Start or re-start the Tomcat container. The SMS software will load its database and start up. Depending on your 
+machine, this process may take several minutes. 
+
+Navigate to the SMS Web appplicaion in your Web browser. In a default Tomcat installation, 
+the local URL will be:
+http://localhost:8080/cms1-2/
+
+To verify the full functionality of the Strand Maps is working, navigate to one of the 
+example JavaScript clients that comes installed with the software. These are located
+under 'JavaScript API' > 'Example Code' from the main menu. For example:
+http://localhost:8080/cms1-2/docs/jsapi/api_v1/example_clients/sms_example1.html
+
+Use the navigation widget in the Map client to view the available topics and navigate
+to one of the interactive maps. Click on one of the maps to open it. Depending on 
+your machine, it may take several minutes to open a map for the first time. Map images 
+are cached for fast retrieval after they have been accessed the first time.
+
+The software has been successfully installed if you are able to open the maps, 
+move them around interactively and open the information bubble
+by clicking on the benchmarks in the maps.
+
+
+-- Troubleshooting --
+
+If problems are encountered, try the following:
+
+-The SMS software writes messages to standard out as it starts up.
+Monitor the Tomcat standard ouput for status and error messages.
+
+In a typical Tomcat installation the standard ouput is written to a file
+named 'catalina.out' locaed in the 'logs' folder of Tomcat.
+
+-Be sure the build.properties settings are correct
+
+-Be sure you are using the correct version of Tomcat, Java and MySQL
+
+
+
+-- Updating/changing the database of chapters, maps, benchmarks, etc. --
+
+The SMS generates it's maps from a MySQL database, which is
+loaded from a flat file that resides in the SMS installation.
+The established database contains the AAAS Atlas for Science Literacy
+Volumes 1 and 2.
+
+Here is a *rough* outline of the basic steps necessary to modify and persist the SMS database:
+
+1. Start SMS Tomcat, which loads the database into MySql
+2. Edit database with PhpMyAdmin or similar tool, adhering to the database structures that
+exist
+3. Verify and QA the changes in the SMS UI (may require disabling caching in the server)
+3. Export/dump the edited database to a flat file in the format that is
+expected by SMS
+4. Save the edited database flat file to the SMS server and deploy to
+tomcat at ${tomcat}/{sms-installation}/WEB-INF/Database/strandmap.sql
+5. Verify that SMS can indeed load the edited flat file by restarting SMS
+Tomcat and verifying in the UI
+
+

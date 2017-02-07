@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+	<display-name>Strand Map Service (v@VERSION@)</display-name>
+	
+	
+	<!-- The url to the NSDL Search API (DDS). -->
+	<context-param>
+		<param-name>nsdlSearchBaseUrl</param-name>
+		<param-value>http://nsdl.org/dds-search</param-value>		
+	</context-param>
+	<!-- The HTTP User-Agent header sent in requests to the Search API from the JavaScript API -->
+	<context-param>
+		<param-name>httpUserAgentJavaScriptAPI</param-name>
+		<param-value>Strand Map Service (JS API)</param-value>		
+	</context-param>
+	<!-- The baseURL to the AAAS assessments and misconceptions that are injected into the InfoBubble tabs -->
+	<context-param>
+		<param-name>aaasAssessmentsBaseURL</param-name>
+		<param-value>http://assessment.aaas.org</param-value>		
+	</context-param>
+	
+	<!-- The url to the SMS CSIP interface. -->
+	<context-param>
+		<param-name>smsCsipHost</param-name>
+		<param-value>@CSIP_SERVICE_HOST@</param-value>		
+	</context-param>
+	<context-param>
+		<param-name>smsCsipPort</param-name>
+		<param-value>@CSIP_SERVICE_PORT@</param-value>		
+	</context-param>
+	<context-param>
+		<param-name>smsCsipContext</param-name>
+		<param-value>@CSIP_SERVICE_CONTEXT@</param-value>		
+	</context-param>
+	<!-- smsCsipBaseUrl should point to the same service as above: -->
+	<context-param>
+		<param-name>smsCsipBaseUrl</param-name>
+		<param-value>http://strandmaps.nsdl.org/cms1-2</param-value>		
+	</context-param>	
+	
+	
+ 	<filter>
+	  <filter-name>Compression Filter</filter-name> 
+	  <filter-class>edu.cu.cs.sms.util.CompressionFilter</filter-class> 
+	  <init-param>
+		 <param-name>compressionThreshold</param-name> 
+		 <param-value>1024</param-value> 
+	  </init-param>
+	  <init-param>
+	  	<param-name>debug</param-name> 
+	  	<param-value>0</param-value> 
+	  </init-param>
+  	</filter>
+
+	<filter-mapping>
+	  <filter-name>Compression Filter</filter-name> 
+	  <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <servlet>
+			<servlet-name>OAI</servlet-name>
+			<jsp-file>/oai.jsp</jsp-file>
+	</servlet>
+
+    <servlet>
+        <servlet-name>action</servlet-name>
+        
+        <servlet-class>edu.cu.cs.sms.ExtendedActionServlet</servlet-class>
+        
+	        <init-param>
+	            <param-name>initInstances</param-name>
+	            <param-value>20</param-value>
+	        </init-param>
+	        
+	        <init-param>
+	            <param-name>QueryEngines</param-name>
+	            <param-value>edu.cu.cs.sms.Database.QueryExecutor</param-value>
+	        </init-param>
+
+	        <init-param>
+	            <param-name>loadClasses</param-name>
+	            <param-value>edu.cu.cs.sms.xml.makeSMSReply:edu.cu.cs.sms.formators.SMSJSONConverter:edu.cu.cs.sms.svg.SVGFormatter:edu.cu.cs.sms.formators.JPEGConverter:edu.cu.cs.sms.formators.XSVGConverter:edu.cu.cs.sms.formators.JSONMAPConverter:edu.cu.cs.sms.formators.PNGConverter:edu.cu.cs.sms.formators.TIFFConverter:edu.cu.cs.sms.formators.PDFConverter:edu.cu.cs.sms.formators.OWLLiteConverter</param-value>
+	        </init-param>
+        
+	        <init-param>
+	            <param-name>config</param-name>
+	            <param-value>/WEB-INF/struts-config.xml</param-value>
+	        </init-param>
+	        
+	        <init-param>
+	            <param-name>debug</param-name>
+	            <param-value>3</param-value>
+	        </init-param>
+	        
+	        <init-param>
+	            <param-name>detail</param-name>
+	            <param-value>3</param-value>
+	        </init-param>
+
+	        <init-param>
+	            <param-name>LogFileSize</param-name>
+	            <param-value>50000</param-value>
+	        </init-param>
+
+	        <init-param>
+	            <param-name>LogFileRotations</param-name>
+	            <param-value>50</param-value>
+	        </init-param>
+
+	        <init-param>
+	            <param-name>LogLevel</param-name>
+	            <param-value>WARNING</param-value> <!-- ALL,OFF,INFO,FINEST,FINDER,FINE,CONFIG,WARNING,SEVERE -->
+	        </init-param>
+	        
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+	<!-- Used to validate CSIP queries - not currently working -->
+	<!-- <servlet>
+		<servlet-name>CmsQueryValidate</servlet-name>
+		<servlet-class>edu.cu.cs.sms.xml.ValidateQuery</servlet-class>
+	</servlet>	
+
+	<servlet-mapping>
+		<servlet-name>CmsQueryValidate</servlet-name>
+		<url-pattern>/ValidateQuery</url-pattern>
+	</servlet-mapping>	 -->	
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/CacheException</url-pattern>
+    </servlet-mapping>   
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/ServiceDescription</url-pattern>
+    </servlet-mapping>    
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/SubmitResource</url-pattern>
+    </servlet-mapping>    
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/RegisterQuery</url-pattern>
+    </servlet-mapping>    
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/default</url-pattern>
+    </servlet-mapping>
+ 
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>    
+ 
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/Query</url-pattern>
+    </servlet-mapping> 
+    
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/Response</url-pattern>
+    </servlet-mapping>  
+       
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/BinaryResponse</url-pattern>
+    </servlet-mapping>    
+	
+	
+	<!-- JavaScript API, JSON, and dynamic images handled by the JavascriptAction -->
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/jsapi/maps</url-pattern>
+    </servlet-mapping>  
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/jsapi/maps-impl</url-pattern>
+    </servlet-mapping>  	
+	
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>/jsapi/json</url-pattern>
+    </servlet-mapping>		
+	
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.JPG</url-pattern>
+    </servlet-mapping>
+	
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.PNG</url-pattern>
+    </servlet-mapping>
+	
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.PDF</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.SVG</url-pattern>
+    </servlet-mapping>	
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.XML</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>OAI</servlet-name>
+        <url-pattern>/OAI-PMH</url-pattern>
+    </servlet-mapping>
+    
+	<session-config>
+		<session-timeout>1</session-timeout>
+	</session-config>
+
+</web-app>

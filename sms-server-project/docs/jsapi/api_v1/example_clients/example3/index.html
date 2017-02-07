@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+	<title>SMS: Example 3</title>
+	
+	
+	<!-- Define CSS styles for the page and override desired styles set by the service -->
+	<style type="text/css">
+		body {
+			padding:0;
+			margin:0;
+			margin-left:20;
+			margin-right:20;
+		}
+		
+		body {
+			background: #E9EFAA;
+		}
+		
+		body, p, h1, h2, h3, h4, td, li  { font-family: Geneva, Arial, Helvetica, sans-serif; }	
+
+		p {
+			font-size: 11pt;
+		}
+		
+		h3 {
+			font-size: 12pt;
+			padding: 15 0 0 0;
+			margin: 0;
+		}
+	</style>
+
+</head>
+
+<body>
+	
+	<h3>Interactive Strand Map Viewer</h3>
+
+	<p>
+		This example shows how to display a single map using an iframe. The map is set
+		to a fixed size and displays a benchmark in the information bubble when the page
+		is first loaded.
+	</p>
+	
+	
+	<h3>Interactive Map:  Changes in the Earth's Surface</h3>
+	
+	<table style="margin:10px;">
+		<tr>
+			<td style="background-color:#CCC;">
+				<!-- Display the map with a fixed size, leaving room for a border around the map -->
+				<p>Note:  This map is using the asnid parameter to render the map with the active benchmark.  View source to see.</p>
+				<iframe width="800" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="map_for_iframe.html?asnid=http://asn.jesandco.org/resources/S2366936"></iframe>
+			</td>
+		</tr>
+	</table>
+	<table style="margin:10px;">
+		<tr>
+			<td style="background-color:#CCC;">
+				<!-- Display the map with a fixed size, leaving room for a border around the map -->
+				<p>Note:  This map is using the bm parameter to render the map with the active benchmark.  View source to see.</p>
+				<iframe width="800" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="map_for_iframe.html?bm=SMS-BMK-0025"></iframe>
+			</td>
+		</tr>
+	</table>
+	<p>
+		Because the map size is fixed, the page can have content on all sides.
+	</p>	
+
+</body>
+</html>

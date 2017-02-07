@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright 2002-2005 Boulder Learning Technologies Lab & American Association for the Advancement of Science, 
+ DLC-1B20, Department of Computer Science, University of Colorado at Boulder,
+ CO-80309, Tel: 303-492-0916, email: fahmad@colorado.edu
+ 
+ This file is part of the Concept Map Service Software Project.
+ 
+ The Concept Map Service Project is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ 
+ The Concept Map Service OAI Project is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with The Concept Map Service System; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+ 
+ Author: Faisal Ahmad
+ Date  : Sept 14, 2005
+ email : fahmad@colorado.edu
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://sms.dlese.org" targetNamespace="http://sms.dlese.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="replyConfiguration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Skeleton"/>
+			<xs:enumeration value="Detailed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="operators">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Logical"/>
+			<xs:enumeration value="Relational"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="queryEnumeration">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Content-Query"/>
+			<xs:enumeration value="Navigational-Query"/>
+			<xs:enumeration value="ASNLookup-Query"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="formatType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(SMS|SMS-JSON|PDF|SVG|XSVG|SVG-JSON|JPEG|PNG|TIFF|OWLLite)(\+(SMS|SMS-JSON|PDF|SVG|XSVG|SVG-JSON|JPEG|PNG|TIFF|OWLLite))*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="booleanOperators">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND"/>
+			<xs:enumeration value="OR"/>
+			<xs:enumeration value="NOT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="libraryType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="matchTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Equals"/>
+			<xs:enumeration value="Contains-all-words"/>
+			<xs:enumeration value="Contains-any-word"/>
+			<xs:enumeration value="Contains-phrase"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="grType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="K"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="codeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="codeDescriptionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="extensionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MapMerge"/>
+			<xs:enumeration value="ThirdPartySearch"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="adminOperations">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Remove"/>
+			<xs:enumeration value="Disable"/>
+			<xs:enumeration value="Enable"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="functionalOperations">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Update Query String"/>
+			<xs:enumeration value="Add Query String"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="authenticationCodeOperations">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Change Authentication Code"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LookupOperations">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Find"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SeeAllOperations">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="List"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Enable"/>
+			<xs:enumeration value="Disable"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="encodingType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="MIN-URL|UTF-8|ASCII|Cp1252|ISO8859_1|UnicodeBig|UnicodeBigUnmarked|UnicodeLittle|UnicodeLittleUnmarked|UTF8|UTF-16|None"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CycleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Auto-OR"/>
+			<xs:enumeration value="Auto-AND"/>
+			<xs:enumeration value="Auto-NOT-OR"/>
+			<xs:enumeration value="Auto-NOT-AND"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

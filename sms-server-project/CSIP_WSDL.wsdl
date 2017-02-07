@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright 2002-2005 Boulder Learning Technologies Lab & American Association for the Advancement of Science, 
+ DLC-1B20, Department of Computer Science, University of Colorado at Boulder,
+ CO-80309, Tel: 303-492-0916, email: fahmad@colorado.edu
+ 
+ This file is part of the Concept Map Service Software Project.
+ 
+ The Concept Map Service Project is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ 
+ The Concept Map Service OAI Project is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with The Concept Map Service System; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+ 
+ Author: Faisal Ahmad
+ Date  : Sept 14, 2005
+ email : fahmad@colorado.edu
+-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:self="http://bolt.dlese.org" xmlns:csip="http://sms.dlese.org" targetNamespace="http://bolt.dlese.org">
+	<message name="responseServiceDescription">
+		<part name="System_Capabilities" type="xs:string"/>
+	</message>
+	<message name="requestSubmitResource">
+		<part name="ObjectID" type="xs:string"/>
+		<part name="Resource" type="xs:anyURI"/>
+		<part name="email" type="xs:string"/>
+	</message>
+	<message name="requestQuery">
+		<part name="Query" type="xs:string"/>
+	</message>
+	<message name="responseQuery">
+		<part name="result" type="xs:string"/>
+	</message>
+	<message name="requestRegisterQuery">
+		<part name="RegisterQuery" type="xs:string"/>
+	</message>
+	<message name="responseRegisterQuery">
+		<part name="response" type="xs:string"/>
+	</message>
+	<portType name="SMS_Services_GET">
+		<operation name="ServiceDescription">
+			<output message="self:responseServiceDescription"/>
+		</operation>
+		<operation name="SubmitResource">
+			<input message="self:requestSubmitResource"/>
+		</operation>
+		<operation name="Query">
+			<input message="self:requestQuery"/>
+			<output message="self:responseQuery"/>
+		</operation>
+		<operation name="RegisterQuery">
+			<input message="self:requestRegisterQuery"/>
+			<output message="self:responseRegisterQuery"/>
+		</operation>
+	</portType>
+	<portType name="SMS_Service_POST">
+		<operation name="Query">
+			<input message="self:requestQuery"/>
+			<output message="self:responseQuery"/>
+		</operation>
+		<operation name="RegisterQuery">
+			<input message="self:requestRegisterQuery"/>
+			<output message="self:responseRegisterQuery"/>
+		</operation>
+	</portType>
+	<binding name="SMS_ReST_Binding_POST" type="self:SMS_Service_POST">
+		<http:binding verb="POST"/>
+		<operation name="RegisterQuery">
+			<http:operation location="/RegisterQuery"/>
+			<input>
+				<mime:content type="text/xml"/>
+			</input>
+			<output>
+				<mime:content type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="Query">
+			<http:operation location="/Query"/>
+			<input>
+				<mime:content type="text/xml"/>
+			</input>
+			<output>
+				<mime:content type="application/octet-stream"/>
+			</output>
+		</operation>
+	</binding>
+	<binding name="SMS_ReST_Binding_GET" type="self:SMS_Services_GET">
+		<http:binding verb="GET"/>
+		<operation name="RegisterQuery">
+			<http:operation location="/RegisterQuery?"/>
+			<input>
+				<http:urlEncoded/>
+			</input>
+			<output>
+				<mime:content type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="Query">
+			<http:operation location="/Query"/>
+			<input/>
+			<output>
+				<mime:content type="application/octet-stream"/>
+			</output>
+		</operation>
+		<operation name="ServiceDescription">
+			<http:operation location="/ServiceDescription"/>
+			<output>
+				<mime:content type="text/xml"/>
+			</output>
+		</operation>
+		<operation name="SubmitResource">
+			<http:operation location="/SubmitResource"/>
+			<input>
+				<http:urlEncoded/>
+				<http:urlEncoded/>
+				<http:urlEncoded/>
+			</input>
+		</operation>
+	</binding>
+	<service name="SMS_Web_Service">
+		<port name="SMS_Port_GET" binding="self:SMS_ReST_Binding_GET">
+<!--			<http:address location="http://128.138.94.243:8080/smsDevelopmentV1.0"/> -->
+			<http:address location="http://preview.dlese.org/smsServer"/>
+		</port>
+		<port name="SMS_Port_POST" binding="self:SMS_ReST_Binding_POST">
+<!--			<http:address location="http://128.138.94.243:8080/smsDevelopmentV1.0"/>  -->
+			<http:address location="http://preview.dlese.org/smsServer"/> 
+		</port>
+	</service>
+	<!-- HTTP binding for web service requests -->
+</definitions>

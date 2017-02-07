@@ -1,0 +1,9 @@
+advanced_tutorial.zip contains the demonstration html, css, javascript, and php files used in the 
+Advanced Strand Maps Service tutorial located at the NSDL wiki: 
+https://wiki.nsdl.org/index.php/Community:StrandMaps/Training/Tutorial_Advanced
+
+The Advanced Strand Maps Service tutorial directly advanced_tutorial.zip file and the demonstration interface at:
+http://strandmaps.nsdl.org/cms1-2/docs/jsapi/api_v1/example_clients/example4/index.html
+
+Should either the zip file or the demonstration interface be moved from the location
+http://strandmaps.nsdl.org/cms1-2/docs/jsapi/api_v1/example_clients/example4/ please update the NSDL wiki tutorial.

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright 2002-2005 Boulder Learning Technologies Lab & American Association for the Advancement of Science, 
+ DLC-1B20, Department of Computer Science, University of Colorado at Boulder,
+ CO-80309, Tel: 303-492-0916, email: fahmad@colorado.edu
+ 
+ This file is part of the Concept Map Service Software Project.
+ 
+ The Concept Map Service Project is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ 
+ The Concept Map Service OAI Project is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with The Concept Map Service System; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+ 
+ Author: Faisal Ahmad
+ Date  : Sept 14, 2005
+ email : fahmad@colorado.edu
+-->
+<xs:schema targetNamespace="http://sms.dlese.org" xmlns="http://sms.dlese.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+			National Science Digital Library (NSDL) Topic List based on GEM 
+
+		      This schema defines a simpleType which enumerates the allowable values for the GEM subjects.
+
+			Topic List created by Diane Hillmann 2002-09-10
+	
+			Updated 2002-09-27 Naomi Dushay:  version 1.00.001 - added Psychology
+			Updated 2002-09-27 Naomi Dushay:  version 1.00.000
+			Updated 2002-09-24 Naomi Dushay:  corrected targetNamespace
+			Updated 2002-09-17 Naomi Dushay:  added version attribute to schema, changed targetNamespace to correspond to naming convention
+			XML Schema created by Naomi Dushay 2002-09-10	
+    		</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="gem_type_v1.00.xsd"/>
+	<xs:simpleType name="GEMType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NSDL:Education (General)"/>
+			<xs:enumeration value="NSDL:Careers"/>
+			<xs:enumeration value="NSDL:Instructional issues"/>
+			<xs:enumeration value="NSDL:Health"/>
+			<xs:enumeration value="NSDL:Aging"/>
+			<xs:enumeration value="NSDL:Body systems and senses"/>
+			<xs:enumeration value="NSDL:Environmental health"/>
+			<xs:enumeration value="NSDL:Human sexuality"/>
+			<xs:enumeration value="NSDL:Nutrition"/>
+			<xs:enumeration value="NSDL:Mathematics"/>
+			<xs:enumeration value="NSDL:Algebra"/>
+			<xs:enumeration value="NSDL:Applied mathematics"/>
+			<xs:enumeration value="NSDL:Arithmetic"/>
+			<xs:enumeration value="NSDL:Calculus"/>
+			<xs:enumeration value="NSDL:Discrete mathematics"/>
+			<xs:enumeration value="NSDL:Functions"/>
+			<xs:enumeration value="NSDL:Geometry"/>
+			<xs:enumeration value="NSDL:Measurement"/>
+			<xs:enumeration value="NSDL:Number sense"/>
+			<xs:enumeration value="NSDL:Number theory"/>
+			<xs:enumeration value="NSDL:Patterns"/>
+			<xs:enumeration value="NSDL:Probability"/>
+			<xs:enumeration value="NSDL:Statistics"/>
+			<xs:enumeration value="NSDL:Trigonometry"/>
+			<xs:enumeration value="NSDL:Science"/>
+			<xs:enumeration value="NSDL:Agriculture"/>
+			<xs:enumeration value="NSDL:Astronomy"/>
+			<xs:enumeration value="NSDL:Biological and life sciences"/>
+			<xs:enumeration value="NSDL:Biology"/>
+			<xs:enumeration value="NSDL:Botany"/>
+			<xs:enumeration value="NSDL:Chemistry"/>
+			<xs:enumeration value="NSDL:Computer science"/>
+			<xs:enumeration value="NSDL:Earth science"/>
+			<xs:enumeration value="NSDL:Ecology"/>
+			<xs:enumeration value="NSDL:Embryology"/>
+			<xs:enumeration value="NSDL:Engineering"/>
+			<xs:enumeration value="NSDL:Entomology"/>
+			<xs:enumeration value="NSDL:General science"/>
+			<xs:enumeration value="NSDL:Geography"/>
+			<xs:enumeration value="NSDL:Geology"/>
+			<xs:enumeration value="NSDL:Histology"/>
+			<xs:enumeration value="NSDL:History of science"/>
+			<xs:enumeration value="NSDL:Metallurgy"/>
+			<xs:enumeration value="NSDL:Meteorology"/>
+			<xs:enumeration value="NSDL:Natural history"/>
+			<xs:enumeration value="NSDL:Oceanography"/>
+			<xs:enumeration value="NSDL:Paleontology"/>
+			<xs:enumeration value="NSDL:Pharmacology"/>
+			<xs:enumeration value="NSDL:Physical sciences"/>
+			<xs:enumeration value="NSDL:Physics"/>
+			<xs:enumeration value="NSDL:Psychology"/>
+			<xs:enumeration value="NSDL:Space sciences"/>
+			<xs:enumeration value="NSDL:Technology"/>
+			<xs:enumeration value="NSDL:Educational technology"/>
+			<xs:enumeration value="NSDL:Educational media"/>
+			<xs:enumeration value="NSDL:Integrating technology in the classroom"/>
+			<xs:enumeration value="NSDL:Multimedia education"/>
+			<xs:enumeration value="NSDL:Technology planning"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

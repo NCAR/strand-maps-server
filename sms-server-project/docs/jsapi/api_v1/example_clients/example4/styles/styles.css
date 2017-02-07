@@ -1,0 +1,106 @@
+body {
+		margin:0;
+		margin-left:20;
+		margin-right:20;
+		padding:0;
+	}
+	
+	body, #navigatorPane {
+		background: #E9EFAA;
+	}
+	#mapList, #defaultContent {
+		margin-top:0;
+		border: solid 1px #888888;
+		background-color: white;
+		margin-bottom: 30px;
+	}
+	#defaultContent {
+		padding:20px; 
+		padding-top:0px; 	
+	}
+	.mapTable {
+		border-color: white;
+	}
+	.mapTableOver {
+		border-color: #B5CCDF;
+		background: #EFF8FF;
+	}
+	body, p, h1, h2, h3, h4, td, li  { font-family: Geneva, Arial, Helvetica, sans-serif; }
+	
+	h1 { 
+		font-size: 14px;
+	}
+	#smsNavigation{
+		color: #FFFFFF;
+		background: #555555;
+	}
+	#smsMapTitleBar{
+		background: #184F7E;
+		color: #FFFFFF;
+	}
+	#customHeader{
+		padding-top: 5px;
+	}
+	#customHeader, #contentArea, #strandSelector {
+	
+		width:900px;		
+	}
+	#customHeader, #customHeader table {
+		background: #000000;
+		color:#FFFFFF;
+		font-weight:bold;
+		height: 60px;
+	}	
+	.titleText{	
+		font-size: 18px;
+	}
+	.subTitleText{
+		font-size: 12px;
+	}
+	#smsLogo {
+		float:left;
+	}
+	.footerLinks {
+		padding-bottom: 30px;
+		font-size: 11px;
+		font-weight: bold;		
+	}	
+	.hide{
+		display:none;	
+	}
+	#smsUsageLink,#smsHomeLink{
+		color: #000000;
+		text-decoration: underline;
+		display:inline;
+		font-size: 12px;
+		color: #FFFFFF;
+	}
+	#smsUsageClose{
+		color: blue;
+		text-align: center;
+		text-decoration: underline;
+		font-size: 12px;
+	}
+	
+	#smsUsage{
+		position: absolute;
+		width: 450px;
+		margin-left: -425px;
+		font-weight: normal;
+		background: #FFF8E4;
+		border: solid 1px #000;
+		color: #000000;
+		z-index: 300;
+		padding: 5px;
+		text-align: left;
+		font-size:14px;
+	}
+	.smsUsage ul li {
+	
+		padding-left:5;
+	}
+	.error {
+		border: 1px solid red;
+		background-color: yellow;
+		color: red;	
+	}

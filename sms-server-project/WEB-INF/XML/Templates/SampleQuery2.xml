@@ -1,0 +1,9 @@
+<SMS-CSIP xmlns="http://sms.dlese.org">
+	<Query DetailLevel="Skeleton" Format="SMS" Scope="Map">
+		<Content-Query>
+			<InternalRelationships>
+				<InternalRelationship Object="10660000000057" Relation="Is part of"></InternalRelationship>
+			</InternalRelationships>
+		</Content-Query>
+	</Query>
+</SMS-CSIP>

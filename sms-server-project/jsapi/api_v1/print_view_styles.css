@@ -1,0 +1,50 @@
+.pvHeading {
+	font-size: 16px; 
+	font-weight: bold;
+}
+#printBodyDiv, body, html, #contentArea {
+	background-color:#ffffff; 
+}
+#printBodyDiv {
+	padding: 5px;
+}
+#printViewHeading a:link, #printViewHeading a:hover, #printViewHeading a:visited {
+	text-decoration: none;
+	color: #000000;	
+}
+#printViewHeading a:hover {
+	text-decoration: underline;
+}	
+@media print {
+	#printBodyDiv, #strandMap, body, p, table, table tr, table tr td {
+		padding: 0px;
+		margin: 0px;
+	}
+	.hideOnPrint { display: none }
+}	
+
+
+/* print view fixes for firefox */
+/* unfloat all elms */
+#tabBarLabels li {
+	float:none !important;	
+}
+
+/* Overflow must be set to visible*/
+#contentAll, #contentClass, #contentMultimedia, #contentRelated,
+#strandMap, #viewableMap, .calloutImgFrame, .tabContent {
+	overflow: visible !important;
+}
+#smsMisconceptions {
+	overflow: visible !important;
+	_overflow:auto;
+	*overflow:auto;
+}
+
+/* If your elements are positioned absolutely, then you might need to position them relatively */
+#smsMisconceptions, #smsMisconceptionsLinkHolder, #smsMapTitleBarLeft, #smsMapTitleBarRight, 
+#viewableMap, #wholeMap, .calloutImgFrame, .calloutImg, #linkToPage, #linkToPageClose {
+	position: relative;	
+	_position: absolute;
+	*position: absolute;
+}

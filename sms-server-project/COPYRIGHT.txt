@@ -1,0 +1,20 @@
+Copyright (c) 2014 Digital Learning Sciences (DLS), University Corporation for Atmospheric Research (UCAR), 
+P.O. Box 3000, Boulder, CO 80307 and the Institute of Cognitive Science, University of Colorado at Boulder.
+
+The Benchmarks for Science Literacy and all other AAAS content copyright (c)
+American Association for the Advancement of Science, all rights reserved.
+
+This file is part of the Strand Map Service (SMS) Software Project.
+
+
+This software is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free Software
+Foundation; Version 2 of the License.
+
+This software is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this software; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite
+330, Boston, MA 02111-1307 USA

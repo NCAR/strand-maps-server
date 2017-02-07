@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright 2002-2005 Boulder Learning Technologies Lab & American Association for the Advancement of Science, 
+ DLC-1B20, Department of Computer Science, University of Colorado at Boulder,
+ CO-80309, Tel: 303-492-0916, email: fahmad@colorado.edu
+ 
+ This file is part of the Concept Map Service Software Project.
+ 
+ The Concept Map Service Project is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License as
+ published by the Free Software Foundation; either version 2 of the
+ License, or (at your option) any later version.
+ 
+ The Concept Map Service OAI Project is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with The Concept Map Service System; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+ 
+ Author: Faisal Ahmad
+ Date  : Sept 14, 2005
+ email : fahmad@colorado.edu
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://sms.dlese.org" targetNamespace="http://sms.dlese.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../Common/enumeratedTypes.xsd"/>
+	<xs:attributeGroup name="Qualifiers">
+		<xs:attribute name="Format" type="formatType" use="optional"/>
+		<xs:attribute name="Detail" type="replyConfiguration" use="optional"/>
+		<xs:attribute name="Depth" type="xs:integer" use="optional"/>
+	</xs:attributeGroup>
+	<xs:complexType name="versionType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="majorNo" type="xs:string" use="required"/>
+				<xs:attribute name="minorNo" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="supportedConfiguration">
+		<xs:sequence>
+			<xs:element name="Configuration" type="replyConfiguration" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="supportedOperator">
+		<xs:sequence>
+			<xs:element name="Operator" type="operators" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="supportedQueryType">
+		<xs:sequence>
+			<xs:element name="Query" type="queryEnumeration" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="supportedReplyFormat">
+		<xs:sequence>
+			<xs:element name="Format" type="formatType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="supportedLibSearch">
+		<xs:sequence>
+			<xs:element name="Library" type="libraryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="IDType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".{3}-.{3}-.{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ASNIDType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="http://asn.jesandco.org/resources/.{8}|http://purl.org/asn/resources/.{8}|.{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="errorType">
+		<xs:simpleContent>
+			<xs:extension base="codeDescriptionType">
+				<xs:attribute name="Code" type="codeType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="any">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="strict"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="resourceType">
+		<xs:sequence>
+			<xs:element name="Resource" type="any" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="Number" type="xs:integer" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="owl">
+		<xs:sequence>
+			<xs:any processContents="skip"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="xtm">
+		<xs:sequence>
+			<xs:any namespace=" http://www.topicmaps.org/xtm/1.0/" processContents="strict"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="svg">
+		<xs:sequence>
+			<xs:any namespace="http://www.w3.org/2000/svg" processContents="strict"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sms">
+		<xs:sequence>
+			<xs:any namespace="##local" processContents="strict"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="sms-json">
+		<xs:sequence>
+			<xs:any namespace="##local" processContents="strict"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="xsvg">
+		<xs:sequence>
+			<xs:any namespace="##local" processContents="strict"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="svg-json">
+		<xs:sequence>
+			<xs:any namespace="##local" processContents="strict"/>
+		</xs:sequence>
+	</xs:complexType>		
+	<xs:complexType name="mapResponse">
+		<xs:choice>
+			<xs:element name="SMS" type="sms"/>
+			<xs:element name="SMS-JSON" type="sms-json"/>
+			<xs:element name="XTM" type="xtm"/>
+			<xs:element name="SVG" type="svg"/>
+			<xs:element name="XSVG" type="xsvg"/>
+			<xs:element name="SVG-JSON" type="svg-json"/>			
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="StringTextType">
+		<xs:annotation>
+			<xs:documentation>
+					Use this patterned string to ensure that a null tag is not valid string content.
+					Note: that xs:string allows content to be null even if the element is required.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".[\S\s]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EMPTY"/>
+	<xs:complexType name="supportedExtensionType">
+		<xs:sequence>
+			<xs:element name="Service" type="extensionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AuthenticationCodeType">
+		<xs:restriction base="StringTextType">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

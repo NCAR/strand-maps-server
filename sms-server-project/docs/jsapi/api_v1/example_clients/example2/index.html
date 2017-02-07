@@ -1,0 +1,447 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+
+<title>SMS: Example 2</title>
+
+<script type="text/javascript" src="@JSAPI_SERVICE_URL@/maps?api=v1"></script>
+<script type="text/javascript" language="javascript">
+	// Note that the Prototype JS API is used in this example.	
+
+	// SMS objects used in this example:
+	var infoBubble = null;
+	
+	// Tabs:
+	var ajaxContentTab = null;
+	var youTubeTab = null;
+	var googleMapTab = null;
+	
+	// Set up event listeners and actions on the Strand Map, on load:
+	SMSEvent.addListener(StrandMap,"onload", setUpStrandMap);
+	function setUpStrandMap() {
+		
+		// Set up handlers for actions on the StrandMap:
+		infoBubble = StrandMap.getInfoBubble();		
+		
+		// Add tabs to the Info Bubble in the order they will appear:
+		benchmarkInfoTab = new InfoBubbleTab('Benchmark info');
+		infoBubble.addTab(benchmarkInfoTab);
+		SMSEvent.addListener(benchmarkInfoTab,"onselect",myCallBackForBenchmarkInfoTab);			
+
+		// Add a tab to display information about the parent objects to the benchmark:
+		parentInfoTab = new InfoBubbleTab('Parent node info');
+		infoBubble.addTab(parentInfoTab);
+		SMSEvent.addListener(parentInfoTab,"onselect",myCallBackForParentInfoTab);
+		// Create a simple tab to show some content brought in asynchronously:
+		ajaxContentTab = new InfoBubbleTab('Ajax content');
+		infoBubble.addTab(ajaxContentTab);
+		SMSEvent.addListener(ajaxContentTab,"onselect",ajaxContentTabCallback);		
+		
+		// Create a tab to show some YouTube content:
+		youTubeTab = new InfoBubbleTab('Video');
+		infoBubble.addTab(youTubeTab);
+		SMSEvent.addListener(youTubeTab,"onselect",youTubeTabCallback);	
+		
+		// Create a tab to show some Google Map content:
+		googleMapTab = new InfoBubbleTab('Map');
+		infoBubble.addTab(googleMapTab);
+		SMSEvent.addListener(googleMapTab,"onselect",googleMapTabCallback);
+		
+		// Register a handler for when a benchmark is selected:
+		SMSEvent.addListener(StrandMap,"onbenchmarkselect",onBenchmarkSelect);
+
+		// Register a handler for when a the infoBubble is closed:
+		SMSEvent.addListener(infoBubble,"onclose",onInfoBubbleClose);
+		
+		// Register a handler for when the print view is displayed:
+		SMSEvent.addListener(StrandMap,"onprintviewdisplay",onPrintViewDisplay);
+	}
+	
+	// When a benchmark is selected, update the content in the infoBubble:
+	function onBenchmarkSelect() {
+		infoBubble.setBuiltinContent("benchmarkdetails");
+		googleMapTab.setContent(null);
+		youTubeTab.setContent(null);
+		infoBubble.selectTab(ajaxContentTab);
+	}
+	
+	// When the infoBubble is closed, disable embedded content:
+	function onInfoBubbleClose() {
+		googleMapTab.setContent(null);
+		youTubeTab.setContent(null);
+	}	
+		// This tab illustrates how to access benchmark JSON and display it in the tab:
+	function myCallBackForBenchmarkInfoTab() {
+		var id = StrandMap.getSelectedBenchmarkId();
+		var mapTitle = StrandMap.getMapJson().itemRecord.Data.Name;
+		var recordJson = StrandMap.getSelectedBenchmarkRecordJson();
+		
+		var content = '<h1>Benchmark details</h1>';
+		content += '<p>In map <i>' + mapTitle + '</i></p>';
+		
+		content += '<p>Here is a small sample of the data that is available from the service about this benchmark:</p>';
+		content += '<ul>';
+		content += '<li><b>Benchmark name</b>: ' + recordJson.itemRecord.Data.Name + '</li>';
+		content += '<li><b>Description</b>: ' + recordJson.itemRecord.Data.Description + '</li>';
+		content += '<li><b>Benchmark SMS ID</b>: ' + id + '</li>';
+		content += '<li><b>AAAS Code</b>: ' + recordJson.itemRecord.Data.AAASCode + '</li>';
+
+		var grArray = recordJson.itemRecord.Data.GradeRanges.GradeRange;	
+		content += '<li><b>Grade range</b>: ' + grArray[0] + ' - ' + grArray[grArray.length-1] + '</li>';
+		
+		var kwArray = recordJson.itemRecord.Data.Keywords.keyword;
+		content += '<li><b>Keywords</b>: ';
+		for(var i=0; i< kwArray.length; i++)
+			content += kwArray[i] + (i == kwArray.length-1 ? '</li>' : ', ');
+			
+		var relArray = recordJson.itemRecord.Data.InternalRelationship.CatalogID;	
+		content += '<li><b>Internal relationships</b>:';
+		for(var i=0; i< relArray.length; i++)
+			content += '<br/>- ' + relArray[i].RelationType + ' - ' + relArray[i].CatalogNumber;		
+		content += '</li></ul>';
+		benchmarkInfoTab.setContent(content);
+	}	
+	
+	/* This tab illustrates how to pull JSON data in asynchronously from the service by injecting a callback function 
+	into a script tag in the header of the page */	
+	function myCallBackForParentInfoTab() {
+		var parentIds = StrandMap.getParentIds();	
+
+		// Pupulate this tab's content only if it's empty, since it's the same for the entire map:
+		if(	parentInfoTab.getContent() == null ) {
+			var mapTitle = StrandMap.getMapJson().itemRecord.Data.Name;			
+			var content = '<h1>Parent node details</h1>';
+			content += '<p>Map <i>' + mapTitle + '</i>';
+			content += ' has ' + parentIds.length + ' parent' + (parentIds.length != 1 ? 's' : '') + ':</p>';
+			parentInfoTab.setContent(content);
+		
+			// Loop through each of the parent IDs for this map, fetch and display info in the tab about each parent node:
+			for(var i = 0; i < parentIds.length; i++) {
+				var myUrl = '@JSAPI_SERVICE_URL@/json?callBack=renderParentTab&Format=SMS-JSON&ObjectID='+parentIds[i];
+				
+				var mapScriptReq = document.createElement( 'script' );
+				mapScriptReq.src = myUrl;
+				
+				// Insert the script in the document head, which executes the callback renderParentTab()
+				document.getElementsByTagName('head')[0].appendChild( mapScriptReq );
+			}
+		}
+	}
+	
+	// Render the content in the parent:
+	function renderParentTab(parentJson) {
+		var mapTitle = StrandMap.getMapJson().itemRecord.Data.Name;
+		
+		var recordJson = parentJson['SMS-CSIP'].QueryResponse.SMS.Record;
+		
+		var content = parentInfoTab.getContent();
+		
+		content += '<h2><i>' + recordJson.itemRecord.Data.Name + '</i></h2>';
+		content += '<ul>';
+		content += '<li><b>Type</b>: ' + recordJson.itemRecord.Data.ObjectType + '</li>';		
+		content += '<li><b>Description</b>: ' + recordJson.itemRecord.Data.Description + '</li>';
+		content += '<li><b>Node ID</b>: ' + recordJson.itemRecord.Admin.IDNumber + '</li>';
+
+		var grArray = recordJson.itemRecord.Data.GradeRanges.GradeRange;	
+		content += '<li><b>Grade range</b>: ' + grArray[0] + ' - ' + grArray[grArray.length-1] + '</li>';
+		
+		var kwArray = recordJson.itemRecord.Data.Keywords.keyword;
+		content += '<li><b>Keywords</b>: ';
+		// If only one keyword:
+		if(typeof(kwArray) == 'string')
+			content += kwArray + '</li>';
+		// If an array of keywords:
+		else 
+			for(var i=0; i< kwArray.length; i++)
+				content += kwArray[i] + (i == kwArray.length-1 ? '</li>' : ', ');
+		
+		content += '<li><b>Internal relationships</b>:';
+		var relation = recordJson.itemRecord.Data.InternalRelationship.CatalogID;
+		content += '<br/>- ' + relation.RelationType + ' - ' + relation.CatalogNumber;
+		content += '</li></ul>';
+
+		parentInfoTab.setContent(content);		
+	}
+	// Insert content in the tab asynchronously:
+	function ajaxContentTabCallback() {
+		infoBubble.setTitle("Benchmark Details / AJAX");
+		if(ajaxContentTab.getContent() == null) {
+			
+			// Use AJAX to pull in the content asynchronously:
+			// The Ajax.Request method is defined by the Prototype JS API
+			new Ajax.Request(
+				"ajax_content.html", 
+				{
+					method: 'get', 			
+					onSuccess: function (response) {
+						var c;
+						if(response.responseText)
+							c = response.responseText;
+						else
+							c = response;
+							
+						// Insert the content into the tab:
+						ajaxContentTab.setContent(c);
+					},
+					onFailure: function (response) {
+						alert('The AJAX request failed. Message:\n\n ' + response.responseText);
+					}
+				});
+		}
+	}
+	
+	// Insert content in the tab for the video:
+	function youTubeTabCallback() {
+		infoBubble.setTitle("Benchmark Details / Video");
+		if(youTubeTab.getContent() == null) {
+			
+			// Use AJAX to pull in the content asynchronously:
+			// The Ajax.Request method is defined by the Prototype JS API
+			new Ajax.Request(
+				"youtube_content.html", 
+				{
+					method: 'get', 			
+					onSuccess: function (response) {
+						var c;
+						if(response.responseText)
+							c = response.responseText;
+						else
+							c = response;
+							
+						// Insert the content into the tab:
+						youTubeTab.setContent(c);
+					},
+					onFailure: function (response) {
+						alert('The AJAX request failed. Message:\n\n ' + response.responseText);
+					}
+				});			
+		
+		}
+	}
+	
+	// Insert content in the tab for the map:
+	function googleMapTabCallback() {
+		infoBubble.setTitle("Benchmark Details / Map");
+		if(googleMapTab.getContent() == null) {
+			
+			// Use AJAX to pull in the content asynchronously:
+			// The Ajax.Request method is defined by the Prototype JS API			
+			new Ajax.Request(
+				"google_map_content.html", 
+				{
+					method: 'get', 			
+					onSuccess: function (response) {
+						var c;
+						if(response.responseText)
+							c = response.responseText;
+						else
+							c = response;
+							
+						// Insert the content into the tab:
+						googleMapTab.setContent(c);
+					},
+					onFailure: function (response) {
+						alert('The AJAX request failed. Message:\n\n ' + response.responseText);
+					}
+				});	
+		}
+	}
+	
+	// When the print view is displayed, insert some custom content:
+	function onPrintViewDisplay() {	
+		StrandMap.setPrintViewContent('<h1>My custom print content</h1><p>Here is some custom content for the print view</p>');	
+	}		
+	
+	// ----- Non-SMS API JS for this page to display a 'help' box:
+	
+	function onPageLoad() {
+		var body = document.getElementsByTagName('body')[0];
+		Event.observe('contentArea', 'mousedown', onBodyClick, false);
+	}
+	Event.observe(window, 'load', onPageLoad, false);		
+	
+	function onBodyClick() {
+		if(isHelpDown)	
+			toggleHelp();
+	}
+	
+	var isHelpDown = false;
+	function toggleHelp(){
+		if(isHelpDown) {
+			$('smsBrowse').className = 'smsForm';
+			Effect.BlindUp('smsUsage',{duration:0.1});
+		}
+		else{
+			$('smsBrowse').className = 'hide';
+			Effect.BlindDown('smsUsage',{duration:0.1});
+		}
+		isHelpDown = !isHelpDown;
+	}	
+		
+</script>
+
+<!-- Define CSS styles and override desired styles set by the service -->
+<style type="text/css">
+	body {
+		margin:0;
+		margin-left:20;
+		margin-right:20;
+		padding:0;
+	}
+	
+	body, #navigatorPane {
+		background: #E9EFAA;
+	}		
+	
+	body, p, h1, h2, h3, h4, td, li  { font-family: Geneva, Arial, Helvetica, sans-serif; }
+	
+	h1 { 
+		font-size: 14px;
+	}
+	#smsNavigation{
+		color: #FFFFFF;
+		background: #555555;
+	}
+	#smsMapTitleBar{
+		background: #184F7E;
+		color: #FFFFFF;
+	}
+	#customHeader{
+		padding-top: 5px;	
+	}
+	#customHeader, #customHeader table {
+		background: #000000;
+		color:#FFFFFF;
+		font-weight:bold;
+		height: 50px;
+	}	
+	.titleText {	
+		font-size: 18px;
+	}
+	.subTitleText{
+		font-size: 12px;
+		font-style:italic;
+	}
+	.hide{
+		display:none;	
+	}
+	#smsUsageLink,#smsHomeLink {
+		color: #000000;
+		text-decoration: underline;
+		display:inline;
+		font-size: 12px;
+		color: #FFFFFF;
+	}
+	#smsUsageClose{
+		color: blue;
+		text-align: center;
+		text-decoration: underline;
+		font-size: 12px;
+	}
+	#smsUsage{
+		position: absolute;
+		width: 300px;
+		margin-left: -300px;
+		font-weight: normal;
+		background: #fff8e4;
+		border: solid 1px #000000;
+		color: #000000;
+		z-index: 99;
+		padding: 5px;
+		text-align: left;
+	}
+	#smsUsage ul li {
+		font-size:14px;
+		padding-left:5;
+	}
+
+
+	/* The table of contents - map list */
+	.mapTable {
+		border-color: white;
+	}
+	.mapTableOver {
+		border-color: #B3BFB3;
+		background: #E0EFE0;
+	}
+	#mapList, #defaultContent {
+		margin-top:0;
+		border: solid 1px #888888;
+		background-color: white;
+		margin-bottom: 30px;
+	}
+	#defaultContent {
+		padding:20px; 
+		padding-top:0px; 	
+	}
+	p {
+		padding-top: 15px;
+		margin: 0px;
+	}		
+</style>
+
+</head>
+
+<body>
+
+<div id="customHeader">
+	<table cellpadding="2" cellspacing="0" style="padding:0;margin:0;border:none;width:100%;">
+		<tr>
+			<td align="left" valign="top" style="text-align: left;">
+				<nobr>
+					<span class="titleText">Interactive Strand Map Viewer</span>
+				</nobr>
+				
+			</td>
+			<td style="padding-left:5px;padding-right:5px;" valign="top" align="right">
+				<p><a href="index.html" id="smsHomeLink">Home</a><br/>
+				<a href="javascript:toggleHelp()" id="smsUsageLink">Help</a></p>
+				<div id="smsUsage" style="display:none;">
+					<h1>How to use the map viewer:</h1>
+					<ul>
+						<li>Click and Drag your mouse to move the map</li>
+						<li>Click on a benchmark to view the benchmark full text, associated standards and educational resources.</li>
+					</ul>
+					<a href="javascript:toggleHelp()" id="smsUsageClose">Close</a>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="contentArea">
+
+<div id="strandSelector"></div>
+
+<div id="strandMap" mapColor="C3DFC3" highlightColor="C3DFC3"></div>
+
+<div id="defaultContent" style="display:none">
+	<div  style="padding:20px; padding-top:0px; width: 600px; ">
+		<p>
+			<nobr>
+				<span class="titleText">Interactive Strand Map Viewer</span><br/>
+			</nobr>
+		</p>
+		<p>
+			This example shows how to pull HTML, video and a Google map into the information bubble using AJAX. 
+			It also shows how to display custom content in the 
+			print view and to display a simple help screen for the user.
+		</p>
+		<p>
+			To use the interactive map viewer: Pick a topic from the list or search using your own terms. Maps of interrelated science or math concepts 
+			will be suggested and from each map you can find grade-appropriate classroom resources to help teach the 
+			desired concept and see the associated education standard.
+		</p>
+		<p>
+			The strand maps are derived from the American Association for the
+			Advancement of Science's (AAAS) Atlas of Science Literacy (AAAS Project
+			2061, 2001 &amp; 2007) and are aligned with the 
+			National Science Education Standards (NSES). 
+		</p>	
+	
+	</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+<h2>Self-Grading Quiz </h2>
+<p>This tab demonstrates an example of custom content that uses javascript to operate a simple in-tab quiz.</p>
+<form method="POST" name="quizform">
+<table BORDER="0" id="quiztable">
+    <tr>
+      <td COLSPAN="2">Click on &quot;Next
+      Question&quot; to start quiz. Be sure to use small letters (no caps) when entering your
+      letter choice. Also, in order to get credit for each right answer, be sure to click on
+      &quot;Check Current Answer&quot; before going on to the next question.</td>
+    </tr>
+    <tr>
+      <td COLSPAN="2" align="right"><input TYPE="button"
+      VALUE="Next Question" onClick="nextQuestion(this.form)"> <input TYPE="reset"
+      VALUE="Start Over" onClick="clearForm(this.form)"></td>
+    </tr>
+    <tr>
+      <td width="10%"><b>Question&nbsp;#:</b></td>
+      <td ALIGN="LEFT"><div id="questNo"></div></td>
+    </tr>
+    <tr>
+      <td><b>Question:</b></td>
+      <td><div id="question"> &nbsp;</div></td>
+    </tr>
+    <tr>
+      <td ALIGN="RIGHT"><b>a)</b></td>
+      <td><div id="choiceA"> &nbsp;</div></td>
+    </tr>
+    <tr>
+      <td ALIGN="RIGHT"><b>b)</b></td>
+      <td><div id="choiceB"> &nbsp;</div></td>
+    </tr>
+    <tr>
+      <td ALIGN="RIGHT"><b>c)</b></td>
+      <td><div id="choiceC"> &nbsp;</div></td>
+    </tr>
+    <tr>
+      <td ALIGN="RIGHT"><b>d)</b></td>
+      <td><div id="choiceD"> &nbsp;</div></td>
+    </tr>
+    <tr>
+      <td ALIGN="RIGHT"><b>Your choice:</b></td>
+      <td><input TYPE="TEXT" NAME="yourChoice" SIZE="4"></td>
+    </tr>
+    <tr>
+      <td COLSPAN="2" align="right"><input TYPE="button"
+      VALUE="Check Current Answer" onClick="checkAnswer(this.form)"><input TYPE="button"
+      VALUE="Next Question" onClick="nextQuestion(this.form)"> <input TYPE="reset"
+      VALUE="Start Over" onClick="clearForm(this.form)"></td>
+    </tr>
+    <tr>
+      <td ALIGN="RIGHT"><b>Results:</b></td>
+      <td> &nbsp;<div id="results"></div></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      	<table border="0">
+      		<tr>
+      			<td style="font-size:12px;"><b>Current Score:</b></td>
+      			<td style="font-size:12px;"><b>Points:</b></td>
+      			<td style="font-size:12px;"><div id="myScore"></div></td>
+      			<td style="font-size:12px;"><b>Percentage:</b></td>
+      			<td style="font-size:12px;"><div id="percent"></div></td>
+      			<td style="font-size:12px;"><b>Letter Grade:</b></td>
+      			<td style="font-size:12px;"><div id="grade"></div><td>
+      		</tr>
+      	</table>
+      </td>
+    </tr>
+  </table>
+
+</form>

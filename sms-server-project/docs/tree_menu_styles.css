@@ -1,0 +1,129 @@
+
+/* ---------------- Styles for the DLESE OPML Tree Menus ---------------- */
+
+/* Page content TABLE (two-column table with tree on left, text on right): */
+.dlese_treeMenuTable, .dlese_treeMenuPageContentTable {
+	position: absolute; 
+	top: 0px; 
+	border: 0px; 
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	width: 100%;
+	border-collapse: collapse;
+}
+/* Tree Menu TD: */
+.dlese_treeMenuTableCellMenu {
+	vertical-align: top;
+	background-color: #5364a1; 
+	padding-top: 4px;
+	padding-right: 1px;
+	margin-right: 1px;
+	padding-left: 0px;
+	height: 100%;	
+}
+/* Page body content TD: */
+.dlese_treeMenuTableCellText {
+	vertical-align: top;
+	width: 99%;
+	height: 100%;	
+	padding-left: 0px;
+	margin-left: 10px;
+	padding-right: 8px;
+	margin-right: 8px;
+	padding-top: 9px;
+}
+.dlese_treeMenuTableCellText H1,H2,H3,H4,H5,H6,P,.dlese_topLink { 
+	margin-left: 10px; padding-left: 0px; 
+}
+.dlese_treeMenuTableCellText TABLE { 
+	margin-left: 10px; padding-left: 0px; 
+}
+/* The entire tree is wrapped in a DIV as this: */
+.dlese_treeMenu {
+	padding: 0px;
+	margin: 0px;
+	position: relative;
+	top: 10px;
+}
+/* Each menu entry is rendered as its own TABLE: */
+.dlese_treeMenuTables {
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	border: 0px;
+}
+.dlese_treeMenuTables TD {
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 8pt;
+	padding: 0px;
+	margin: 0px;
+}
+/* All labels (TR of the entry TABLE): */
+.dlese_treeMenuLabels {
+	color: #ffffff;
+	font-weight: bold;
+	margin: 0px; 
+	padding: 0px;
+	font-size: 95%;
+}
+/* All label text: */
+.dlese_treeMenuLabelText {
+	margin-left: 1px;
+	margin-right: 3px;
+	margin-top: 4px;
+	margin-bottom: 3px;
+	line-height: 98%;
+	padding-left: 1px;
+}
+/* Link unvisited/visited/hover colors: */
+.dlese_treeMenuLabels A:link {
+	color: #ffffff;
+	text-decoration: none;
+}
+.dlese_treeMenuLabels A:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+.dlese_treeMenuLabels A:hover {
+	color: #ffffaa;
+	text-decoration: none;
+}
+/* Top-level labels (rows): */
+.dlese_treeMenuTopLabels .dlese_treeMenuLabelText {
+	font-weight: bold;
+}
+/* Sub-menu labels (rows): */
+.dlese_treeMenuSubLabels {
+	/* font-family: Arial narrow; UNCOMMENT FOR SKINNY TEXT */
+	font-weight: normal;
+	background-color: #42538f;
+}
+/* Current page label (row): */
+.dlese_treeMenuSelectedLabel {
+	color: #ffffaa;
+	background-color: #213687;
+}
+/* Image (transparent GIF) icons: */
+.dlese_treeMenuIcons {
+	width: 9px;
+	height: 100%;
+}
+/* Icons indent from left edge: */
+.dlese_treeMenuIconsIndent {
+	margin-left: 4px;
+}
+/* Horizontal rule images: */
+.dlese_treeMenuHR {
+	width: 95%;
+	height: 7px;
+	padding-top: 0px;
+	margin-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+/* Indenting lines before a HR: */
+.dlese_treeMenuHRLines {
+	width: 9px;
+	height: 7px;
+}

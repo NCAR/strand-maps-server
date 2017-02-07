@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SMS-CSIP xmlns="http://sms.dlese.org">
+<QueryResponse>
+<WebOntologyLanguage>
+<rdf:RDF
+    xmlns="http://bolt.cs.colorado.edu/SMS#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xml:base="http://bolt.cs.colorado.edu/SMS">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Atlas">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Object"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Strand">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Benchmark">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Chapter">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Grade_Group">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Science_for_all_americans_paragraph">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Map">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Section">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cluster">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="needsorrequire">
+    <rdfs:domain rdf:resource="#Benchmark"/>
+    <rdfs:range rdf:resource="#Benchmark"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isassociatedwith">
+    <rdfs:domain rdf:resource="#Benchmark"/>
+    <rdfs:range rdf:resource="#Benchmark"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="contributestoandreliesupon">
+    <rdfs:domain rdf:resource="#Benchmark"/>
+    <owl:inverseOf rdf:resource="#contributestoandreliesupon"/>
+    <rdfs:range rdf:resource="#Benchmark"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isreferencedby">
+    <rdfs:range rdf:resource="#Benchmark"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="references"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#Benchmark"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="contributestoachieving">
+    <rdfs:range rdf:resource="#Benchmark"/>
+    <rdfs:domain rdf:resource="#Benchmark"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="supports">
+    <rdfs:range rdf:resource="#Benchmark"/>
+    <rdfs:domain rdf:resource="#Benchmark"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="none">
+    <rdfs:range rdf:resource="#Object"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#references">
+    <rdfs:domain rdf:resource="#Benchmark"/>
+    <rdfs:range rdf:resource="#Benchmark"/>
+    <owl:inverseOf rdf:resource="#isreferencedby"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="GradeRange">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="NarrativeInstructional">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="FullText">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="ExternalStandardRelationship">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="ExternalResourceRelationship">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Keywords">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="NarrativeStudentIdeas">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="NarrativeAssessment">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Subjects">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Name">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="AAASCode">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Description">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="ObjectType">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Language">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Source">
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="NarrativeClarification">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="NarrativeExamples">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:TransitiveProperty rdf:ID="iscloselyrelatedto">
+    <owl:inverseOf rdf:resource="#iscloselyrelatedto"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="#Benchmark"/>
+    <rdfs:range rdf:resource="#Benchmark"/>
+  </owl:TransitiveProperty>
+  <owl:TransitiveProperty rdf:ID="ispartof">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#Object"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:TransitiveProperty>
+  <owl:SymmetricProperty rdf:ID="issimilarto">
+    <owl:inverseOf rdf:resource="#issimilarto"/>
+    <rdfs:range rdf:resource="#Benchmark"/>
+    <rdfs:domain rdf:resource="#Benchmark"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:SymmetricProperty>
+</rdf:RDF>
+</WebOntologyLanguage>
+</QueryResponse>
+</SMS-CSIP>

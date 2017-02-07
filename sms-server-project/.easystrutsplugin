@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<easyStrutsProperties>
+    <strutsConfig>/WEB-INF/struts-config.xml</strutsConfig>
+    <strutsVersion>1</strutsVersion>
+    <basePackage>/</basePackage>
+    <strutsRootDir>edu.cu.cs.sms</strutsRootDir>
+    <strutsApplicationResources>edu.cu.cs.sms.ApplicationResources</strutsApplicationResources>
+    <strutsPattern>0</strutsPattern>
+    <webVersion>3</webVersion>
+    <servletName>action</servletName>
+</easyStrutsProperties>

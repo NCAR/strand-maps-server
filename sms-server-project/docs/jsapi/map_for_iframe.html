@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>   
+	<head>
+		<script type="text/javascript" src="@JSAPI_SERVICE_URL@/maps?api=v1"></script>
+		<script type="text/javascript" language="javascript">	
+			
+			// On load, set up event listeners and actions on the Strand Map:
+			SMSEvent.addListener(StrandMap,"onload", setUpStrandMap);
+			function setUpStrandMap() {
+				// Set the maximum size of the bubble smaller than the default size:
+				StrandMap.getInfoBubble().setMaxSize(375,350);
+				
+				// Set the title of the info bubble:
+				StrandMap.getInfoBubble().setTitle("Benchmark Details");
+				
+				// Register a handler for when a benchmark is selected:
+				SMSEvent.addListener(StrandMap,"onbenchmarkselect",onBenchmarkSelect);
+			}
+		
+			// When a benchmark is selected, update the InfoBubble with the default content:
+			function onBenchmarkSelect() {
+				StrandMap.getInfoBubble().setBuiltinContent("benchmarkdetails");
+			}
+		</script>
+		
+		<style type="text/css">
+			body, #navigatorPane { 
+				background: #B5BEDF;
+			}
+			body { 
+				padding:0;
+				margin: 7 8 8 7;
+				border:0;
+			}
+			body, p, h1, h2, h3, h4, td, li  { font-family: Geneva, Arial, Helvetica, sans-serif; }
+		</style>
+		<!--[if IE]>
+			<style type="text/css">
+				body { 
+					margin:8;
+				}
+			</style>
+		<![endif]-->			
+	</head>
+	<body>
+		<div id="strandMap" mapHeight="600" mapWidth="750"></div>
+	</body>
+</html>
