@@ -4,7 +4,7 @@ The Strand Map Server provides REST-RPC and JavaScript APIs for strand maps base
 
 ## Getting Started
 
-Use the ANT targest to build and deploy the webapp to tomcat
+Use the ANT targets to build and deploy the webapp to tomcat
 
 ### Prerequisites
 
