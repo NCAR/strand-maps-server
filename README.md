@@ -8,7 +8,7 @@ Use the ANT targets to build and deploy the webapp to Tomcat
 
 ### Prerequisites
 
-Java, Tomcat
+Java, Tomcat, MySQL DB
 
 ## History
 
