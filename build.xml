@@ -1,748 +1,701 @@
-<project name="Strand Map Service" basedir="." default="deploy"> 
+<project name="Strand Map Service" basedir="." default="deploy">
 
-	<!-- 
+    <!--
 
-	
 
-		To build and deploy this application, please set the following build properties.
 
-		These may go in a file named build.properties in your home directory or one level
+        To build and deploy this application, please set the following build properties.
 
-		up from the build directory (where ant commands are executed):
+        These may go in a file named build.properties in your home directory or one level
 
-		
+        up from the build directory (where ant commands are executed):
 
-		Required:
 
-			Java 6
 
-		
+        Required:
 
-		Required: 
+            Java 6
 
-			BoLT.tomcat.home
 
-			BoLT.db.Driver.User
 
-			BoLT.db.Driver.Password
+        Required:
 
-			BoLT.db.Cache.Directory
+            BoLT.tomcat.home
 
-			BoLT.db.Cache.Persitent
+            BoLT.db.Driver.User
 
-			
+            BoLT.db.Driver.Password
 
-			Example settings:
+            BoLT.db.Cache.Directory
 
-			BoLT.tomcat.home=C:/Program Files/Apache Software Foundation/Tomcat 5.5
+            BoLT.db.Cache.Persitent
 
-			BoLT.db.Driver.User=joeuser
 
-			BoLT.db.Driver.Password=mypass
 
-		
+            Example settings:
 
-		Optional (default to localhost 8080 if not set):
+            BoLT.tomcat.home=C:/Program Files/Apache Software Foundation/Tomcat 5.5
 
-			BoLT.global.host.port.url - The global host and port URL
+            BoLT.db.Driver.User=joeuser
 
-			BoLT.cmsServerHost - The local host name (local to the server installation)
+            BoLT.db.Driver.Password=mypass
 
-			BoLT.cmsServerPort - The local host port number
 
-			
 
-			Example settings:
+        Optional (default to localhost 8080 if not set):
 
-			BoLT.global.host.port.url=http://www.mydomain.org
+            BoLT.global.host.port.url - The global host and port URL
 
-			BoLT.cmsServerHost=localhost
+            BoLT.cmsServerHost - The local host name (local to the server installation)
 
-			BoLT.cmsServerPort=80
+            BoLT.cmsServerPort - The local host port number
 
-			
 
-			
 
-		Optional database settings. If not defined, defaults to using 
+            Example settings:
 
-		MySQL at localhost with smsServer as database name
+            BoLT.global.host.port.url=http://www.mydomain.org
 
-		(see more example settings below):
+            BoLT.cmsServerHost=localhost
 
-			BoLT.db.Driver.Name
+            BoLT.cmsServerPort=80
 
-			BoLT.db.Driver.URL			
 
-			BoLT.db.Driver.database
 
-		
 
-			Example settings:
 
-			BoLT.db.Driver.Name=com.mysql.jdbc.Driver
+        Optional database settings. If not defined, defaults to using
 
-			BoLT.db.Driver.URL=jdbc:mysql://localhost/	
+        MySQL at localhost with smsServer as database name
 
-			BoLT.db.Driver.database=smsServer		
+        (see more example settings below):
 
-			
+            BoLT.db.Driver.Name
 
-		Optional for remote WAR deployment via Tomcat manager:
+            BoLT.db.Driver.URL
 
-			BoLT.tomcat.manager.URL
+            BoLT.db.Driver.database
 
-			BoLT.tomcat.username
 
-			BoLT.tomcat.username
 
-		
+            Example settings:
 
-			Example settings:
+            BoLT.db.Driver.Name=com.mysql.jdbc.Driver
 
-			BoLT.tomcat.manager.URL=http://localhost/manager
+            BoLT.db.Driver.URL=jdbc:mysql://localhost/
 
-			BoLT.tomcat.username=admin
+            BoLT.db.Driver.database=smsServer
 
-			BoLT.tomcat.username=admin
 
-			
 
-	 -->
+        Optional for remote WAR deployment via Tomcat manager:
 
-	
+            BoLT.tomcat.manager.URL
 
-	<!-- The following two properties should be updated below each time a new release or version is issued -->
+            BoLT.tomcat.username
 
-	<property name="app.version" value="1.2.35"/>
+            BoLT.tomcat.username
 
-	<property name="context.name" value="cms1-2"/>
 
-	 
 
-	<property name="BoLT.basedir" value="${basedir}"/>
+            Example settings:
 
-	<property name="BoLT.srcDir" value="${basedir}/WEB-INF/src"/>
+            BoLT.tomcat.manager.URL=http://localhost/manager
 
-	<property name="BoLT.buildBase" value="${basedir}/build"/>
+            BoLT.tomcat.username=admin
 
-	<property name="BoLT.distDir" value="./Dist"/>
+            BoLT.tomcat.username=admin
 
-	<property name="BoLT.contextFile" value="context.xml"></property>
 
-	<property file="../build.properties"/>
 
-	<property file="${user.home}/build.properties"/>
+     -->
 
-	<property file="build.properties"/>
 
-	<property name="BoLT.deploy.home" value="${BoLT.tomcat.home}/webapps/${context.name}"/>
+    <!-- The following two properties should be updated below each time a new release or version is issued -->
 
-	
+    <property name="app.version" value="1.2.35"/>
 
-	<!-- Common lib at $TC_HOME/common/lib on TC5, $TC_HOME/lib on TC6 -->
+    <property name="context.name" value="cms1-2"/>
 
-	<property name="BoLT.tomcat.common.lib" value="${BoLT.tomcat.home}/lib"/>
 
-	
+    <property name="BoLT.basedir" value="${basedir}"/>
 
-	<!-- Server lib at $TC_HOME/server/lib on TC5, $TC_HOME/lib on TC6 -->
+    <property name="BoLT.srcDir" value="${basedir}/WEB-INF/src"/>
 
-	<property name="BoLT.tomcat.server.lib" value="${BoLT.tomcat.home}/lib"/>
+    <property name="BoLT.buildBase" value="${basedir}/build"/>
 
-	
+    <property name="BoLT.distDir" value="./Dist"/>
 
-	<!-- Default property settings - override in build.properties -->	
+    <property name="BoLT.contextFile" value="context.xml"></property>
 
-	
+    <property file="../sms.properties"/>
 
-	<!-- Local server paths used in the Tag Libs -->
+    <property file="../build.properties"/>
 
-	<property name="BoLT.cmsServerHost" value="localhost"/>
+    <property file="${user.home}/build.properties"/>
 
-	<property name="BoLT.cmsServerPort" value="8080"/>
+    <property file="build.properties"/>
 
-	
+    <property name="BoLT.deploy.home" value="${BoLT.tomcat.home}/webapps/${context.name}"/>
 
-	<property name="BoLT.global.host.port.url" value="http://${BoLT.cmsServerHost}:${BoLT.cmsServerPort}"/>
 
-	
+    <!-- Common lib at $TC_HOME/common/lib on TC5, $TC_HOME/lib on TC6 -->
 
-	<property name="jsapi.clients.service.url" value="http://${BoLT.cmsServerHost}:${BoLT.cmsServerPort}/${context.name}/jsapi"/>
+    <property name="BoLT.tomcat.common.lib" value="${BoLT.tomcat.home}/lib"/>
 
-	
 
-	<!-- OAI data provider settings: -->
+    <!-- Server lib at $TC_HOME/server/lib on TC5, $TC_HOME/lib on TC6 -->
 
-	<property name="oai.admin.email" value=""/>
+    <property name="BoLT.tomcat.server.lib" value="${BoLT.tomcat.home}/lib"/>
 
-	<property name="oai.view.url" value="http://strandmaps.dls.ucar.edu"/>
 
+    <!-- Default property settings - override in build.properties -->
 
 
-	
+    <!-- Local server paths used in the Tag Libs -->
 
-	<!-- Properties used below -->
+    <property name="BoLT.cmsServerHost" value="localhost"/>
 
-		
+    <property name="BoLT.cmsServerPort" value="8080"/>
 
-	<!-- Locally accessable URL to the context, used to pull content in server-side -->
 
-	<property name="local.context.url" value="http://${BoLT.cmsServerHost}:${BoLT.cmsServerPort}/${context.name}"/>
+    <property name="BoLT.global.host.port.url" value="http://${BoLT.cmsServerHost}:${BoLT.cmsServerPort}"/>
 
-	
 
-	<!-- Globally accessable URL to the context -->
+    <property name="jsapi.clients.service.url"
+              value="http://${BoLT.cmsServerHost}:${BoLT.cmsServerPort}/${context.name}/jsapi"/>
 
-	<property name="global.context.url" value="${BoLT.global.host.port.url}/${context.name}"/>
 
+    <!-- OAI data provider settings: -->
 
+    <property name="oai.admin.email" value=""/>
 
-	<property name="BoLT.cmsServerUrlPath" value="/${context.name}/Query"/>
+    <property name="oai.view.url" value="http://strandmaps.dls.ucar.edu"/>
 
 
+    <!-- Properties used below -->
 
-	<filterset id="jsapi_url">
 
-		<filter token="JSAPI_SERVICE_URL" value="${jsapi.clients.service.url}"/>
+    <!-- Locally accessable URL to the context, used to pull content in server-side -->
 
-	</filterset>
+    <property name="local.context.url" value="http://${BoLT.cmsServerHost}:${BoLT.cmsServerPort}/${context.name}"/>
 
-	
 
-	<!-- ### Default settings for db ### -->
+    <!-- Globally accessable URL to the context -->
 
+    <property name="global.context.url" value="${BoLT.global.host.port.url}/${context.name}"/>
 
 
-	<!-- ### DB cache ### -->
+    <property name="BoLT.cmsServerUrlPath" value="/${context.name}/Query"/>
 
-	
 
-	<property name="BoLT.db.Cache.Directory" value="WEB-INF/cache"/>
+    <filterset id="jsapi_url">
 
-	<property name="BoLT.db.Cache.Persistent" value="false"/>
+        <filter token="JSAPI_SERVICE_URL" value="${jsapi.clients.service.url}"/>
 
-	
+    </filterset>
 
-	<!-- ### JDBC Driver ### -->	
 
-	<property name="BoLT.db.Driver.Name" value="com.mysql.jdbc.Driver"/> 
+    <!-- ### Default settings for db ### -->
 
-	<!-- <property name="BoLT.db.Driver.Name" value="org.postgresql.Driver"/> --> 
 
-	<!-- <property name="BoLT.db.Driver.Name" value="com.microsoft.jdbc.sqlserver.SQLServerDriver"/> --> 
+    <!-- ### DB cache ### -->
 
 
+    <property name="BoLT.db.Cache.Directory" value="WEB-INF/cache"/>
 
-	<!-- ### Database URL ### -->		
+    <property name="BoLT.db.Cache.Persistent" value="false"/>
 
-	<property name="BoLT.db.Driver.URL" value="jdbc:mysql://localhost/"/>
 
-	<!-- <property name="BoLT.db.Driver.URL" value="jdbc:postgresql://localhost/StrandMap"/> --> 	
+    <!-- ### JDBC Driver ### -->
 
-	<!-- <property name="BoLT.db.Driver.URL" value="jdbc:microsoft:sqlserver://localhost;databasename=StrandMap"/> --> 
+    <property name="BoLT.db.Driver.Name" value="com.mysql.jdbc.Driver"/>
 
+    <!-- <property name="BoLT.db.Driver.Name" value="org.postgresql.Driver"/> -->
 
+    <!-- <property name="BoLT.db.Driver.Name" value="com.microsoft.jdbc.sqlserver.SQLServerDriver"/> -->
 
-	<!-- ### Database name (for MySQL) ### -->		
 
-	<property name="BoLT.db.Driver.database" value="smsServer"/>
+    <!-- ### Database URL ### -->
 
-		
+    <property name="BoLT.db.Driver.URL" value="jdbc:mysql://localhost/"/>
 
-	<!-- Builds classpath for compiling Concept Map Service Code --> 
+    <!-- <property name="BoLT.db.Driver.URL" value="jdbc:postgresql://localhost/StrandMap"/> -->
 
-	<path id="BoLT.compile.path">
+    <!-- <property name="BoLT.db.Driver.URL" value="jdbc:microsoft:sqlserver://localhost;databasename=StrandMap"/> -->
 
-		<!-- Including SMS resources in classpath -->
 
-		<pathelement location="${BoLT.buildBase}/WEB-INF/classes" />
+    <!-- ### Database name (for MySQL) ### -->
 
-		<fileset dir="${BoLT.basedir}/WEB-INF/lib">
+    <property name="BoLT.db.Driver.database" value="smsServer"/>
 
-			<include name="*.jar" />
 
-		</fileset>
+    <!-- Builds classpath for compiling Concept Map Service Code -->
 
-		<fileset dir="${BoLT.basedir}/WEB-INF/lib/batik">
+    <path id="BoLT.compile.path">
 
-			<include name="*.jar" />
+        <!-- Including SMS resources in classpath -->
 
-		</fileset>		
+        <pathelement location="${BoLT.buildBase}/WEB-INF/classes"/>
 
-		<!-- Including tomcat resources in classpath -->
+        <fileset dir="${BoLT.basedir}/WEB-INF/lib">
 
-		<fileset dir="${BoLT.tomcat.common.lib}">
+            <include name="*.jar"/>
 
-			<include name="*.jar" />
+        </fileset>
 
-		</fileset>
+        <fileset dir="${BoLT.basedir}/WEB-INF/lib/batik">
 
-		<fileset dir="${BoLT.tomcat.server.lib}">
+            <include name="*.jar"/>
 
-			<include name="*.jar" />
+        </fileset>
 
-		</fileset>
+        <!-- Including tomcat resources in classpath -->
 
-	</path>
+        <fileset dir="${BoLT.tomcat.common.lib}">
 
+            <include name="*.jar"/>
 
+        </fileset>
 
-	<!-- Configure the custom Ant tasks for the Manager application -->
+        <fileset dir="${BoLT.tomcat.server.lib}">
 
-	<taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask">
+            <include name="*.jar"/>
 
-		<classpath refid="BoLT.compile.path"/>
+        </fileset>
 
-	</taskdef>
+    </path>
 
-	<taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask">
 
-		<classpath refid="BoLT.compile.path"/>
+    <!-- Configure the custom Ant tasks for the Manager application -->
 
-	</taskdef>
+    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
 
+        <classpath refid="BoLT.compile.path"/>
 
+    </taskdef>
 
-	<!-- Compiles the Concept Map Service Web Services -->
+    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask">
 
-	<target name="compile" depends="makeDirectoryStructure">
+        <classpath refid="BoLT.compile.path"/>
 
-		<echo message="The Java version is: ${ant.java.version} (Java 1.6 and greater is required, not 1.5)"/>
+    </taskdef>
 
-		<javac srcdir="${BoLT.srcDir}" destdir="${BoLT.buildBase}/WEB-INF/classes" optimize="${BoLT.optimize}" deprecation="${BoLT.deprecation}" debug="${BoLT.unchecked}">
 
-			<classpath refid="BoLT.compile.path" />
+    <!-- Compiles the Concept Map Service Web Services -->
 
-		</javac>
+    <target name="compile" depends="makeDirectoryStructure">
 
-	</target>
+        <echo message="The Java version is: ${ant.java.version} (Java 1.6 and greater is required, not 1.5)"/>
 
+        <javac srcdir="${BoLT.srcDir}" destdir="${BoLT.buildBase}/WEB-INF/classes" optimize="${BoLT.optimize}"
+               deprecation="${BoLT.deprecation}" debug="${BoLT.unchecked}">
 
+            <classpath refid="BoLT.compile.path"/>
 
-	<!-- Copies the databased file to appropriate directory -->
+        </javac>
 
-	<target name="copyDatabase">
+    </target>
 
-		<copy file="${BoLT.basedir}/WEB-INF/Database/strandmap.sql" todir="${BoLT.buildBase}/WEB-INF/Database" />
 
-	</target>
+    <!-- Copies the databased file to appropriate directory -->
 
+    <target name="copyDatabase">
 
+        <copy file="${BoLT.basedir}/WEB-INF/Database/strandmap.sql" todir="${BoLT.buildBase}/WEB-INF/Database"/>
 
-	<!-- Copies the properties file to appropriate directories -->
+    </target>
 
-	<target name="copyPropertyFiles">
 
-		<copy todir="${BoLT.buildBase}/WEB-INF/classes">
+    <!-- Copies the properties file to appropriate directories -->
 
-			<fileset dir="${BoLT.srcDir}" includes="**/*.properties **/*.txt" />
+    <target name="copyPropertyFiles">
 
-			
+        <copy todir="${BoLT.buildBase}/WEB-INF/classes">
 
-			<!-- Substitute in the local db properties -->
+            <fileset dir="${BoLT.srcDir}" includes="**/*.properties **/*.txt"/>
 
-			<filterset>
 
-				<filter token="DB.DRIVER.NAME" value="${BoLT.db.Driver.Name}"/>
+            <!-- Substitute in the local db properties -->
 
-				<filter token="DB.DRIVER.URL" value="${BoLT.db.Driver.URL}"/>
+            <filterset>
 
-				<filter token="DB.DRIVER.DATABASE" value="${BoLT.db.Driver.database}"/>
+                <filter token="DB.DRIVER.NAME" value="${BoLT.db.Driver.Name}"/>
 
-				<filter token="DB.DRIVER.USER" value="${BoLT.db.Driver.User}"/>
+                <filter token="DB.DRIVER.URL" value="${BoLT.db.Driver.URL}"/>
 
-				<filter token="DB.DRIVER.PASSWORD" value="${BoLT.db.Driver.Password}"/>
+                <filter token="DB.DRIVER.DATABASE" value="${BoLT.db.Driver.database}"/>
 
-				<filter token="CACHE.DIRECTORY" value="${BoLT.db.Cache.Directory}"/>
+                <filter token="DB.DRIVER.USER" value="${BoLT.db.Driver.User}"/>
 
-				<filter token="CACHE.PERSISTENT" value="${BoLT.db.Cache.Persistent}"/>
+                <filter token="DB.DRIVER.PASSWORD" value="${BoLT.db.Driver.Password}"/>
 
-			</filterset>
+                <filter token="CACHE.DIRECTORY" value="${BoLT.db.Cache.Directory}"/>
 
-		</copy>
+                <filter token="CACHE.PERSISTENT" value="${BoLT.db.Cache.Persistent}"/>
 
-	</target>
+            </filterset>
 
+        </copy>
 
+    </target>
 
-	<!-- Packages Concept Map Service web service into a Java archive file -->
 
-	<target name="makeJar" depends="compile,copyDatabase,copyPropertyFiles">
+    <!-- Packages Concept Map Service web service into a Java archive file -->
 
-		<jar destfile="${BoLT.buildBase}/WEB-INF/lib/${context.name}.jar" basedir="${BoLT.buildBase}/WEB-INF/classes">
+    <target name="makeJar" depends="compile,copyDatabase,copyPropertyFiles">
 
-			<metainf dir="${BoLT.basedir}/WEB-INF/src/META-INF"/>
+        <jar destfile="${BoLT.buildBase}/WEB-INF/lib/${context.name}.jar" basedir="${BoLT.buildBase}/WEB-INF/classes">
 
-		</jar>
+            <metainf dir="${BoLT.basedir}/WEB-INF/src/META-INF"/>
 
-	</target>
+        </jar>
 
+    </target>
 
 
-	<!-- Creates appropriate directory structure for the application -->
+    <!-- Creates appropriate directory structure for the application -->
 
-	<target name="makeDirectoryStructure">
+    <target name="makeDirectoryStructure">
 
-		<mkdir dir="${BoLT.buildBase}/WEB-INF/classes" />
+        <mkdir dir="${BoLT.buildBase}/WEB-INF/classes"/>
 
-		<mkdir dir="${BoLT.buildBase}/WEB-INF/Database" />
+        <mkdir dir="${BoLT.buildBase}/WEB-INF/Database"/>
 
-		<mkdir dir="${BoLT.buildBase}/WEB-INF/lib" />
+        <mkdir dir="${BoLT.buildBase}/WEB-INF/lib"/>
 
-		<mkdir dir="${BoLT.buildBase}/WEB-INF/tlds" />
+        <mkdir dir="${BoLT.buildBase}/WEB-INF/tlds"/>
 
-		<mkdir dir="${BoLT.buildBase}/WEB-INF/XML" />
+        <mkdir dir="${BoLT.buildBase}/WEB-INF/XML"/>
 
-		<mkdir dir="${BoLT.buildBase}/Log" />
+        <mkdir dir="${BoLT.buildBase}/Log"/>
 
-		<mkdir dir="${BoLT.buildBase}/META-INF" />		
+        <mkdir dir="${BoLT.buildBase}/META-INF"/>
 
-	</target>	
+    </target>
 
 
+    <!-- Cleans the build directory -->
 
-	<!-- Cleans the build directory -->
+    <target name="clean"
+            description="Cleans the build. Use to to force a full build of the application on next deploy.">
 
-	<target name="clean" description="Cleans the build. Use to to force a full build of the application on next deploy.">
+        <delete dir="${BoLT.buildBase}"/>
 
-		<delete dir="${BoLT.buildBase}"/>
+    </target>
 
-	</target>
 
-	
+    <!-- Cleans the deployed application in Tomcat webapps -->
 
-	<!-- Cleans the deployed application in Tomcat webapps -->
+    <target name="deploy-clean" description="Cleans the application from the Tomcat webapps directory.">
 
-	<target name="deploy-clean" description="Cleans the application from the Tomcat webapps directory.">
+        <delete dir="${BoLT.deploy.home}"/>
 
-		<delete dir="${BoLT.deploy.home}"/>
+    </target>
 
-	</target>
 
-	
+    <!-- Copy third party binary rescoures to appropriate directories -->
 
-	<!-- Copy third party binary rescoures to appropriate directories -->
+    <target name="copyThirdPartyResources">
 
-	<target name="copyThirdPartyResources">
+        <copy todir="${BoLT.buildBase}/WEB-INF/lib">
 
-		<copy todir="${BoLT.buildBase}/WEB-INF/lib">
+            <fileset dir="${BoLT.basedir}/WEB-INF/lib" includes="*.jar"/>
 
-			<fileset dir="${BoLT.basedir}/WEB-INF/lib" includes="*.jar" />
+        </copy>
 
-		</copy>
+        <copy todir="${BoLT.buildBase}/WEB-INF/lib">
 
-		<copy todir="${BoLT.buildBase}/WEB-INF/lib">
+            <fileset dir="${BoLT.basedir}/WEB-INF/lib/batik" includes="*.jar"/>
 
-			<fileset dir="${BoLT.basedir}/WEB-INF/lib/batik" includes="*.jar" />
+        </copy>
 
-		</copy>		
+    </target>
 
-	</target>
 
+    <!-- Copy CSIP schema and conversion stylesheets to appropriate directories -->
 
+    <target name="copyXMLResources">
 
-	<!-- Copy CSIP schema and conversion stylesheets to appropriate directories -->
+        <copy todir="${BoLT.buildBase}/WEB-INF/XML">
 
-	<target name="copyXMLResources">
+            <fileset dir="${BoLT.basedir}/WEB-INF/XML" includes="**/*.*"/>
 
-		<copy todir="${BoLT.buildBase}/WEB-INF/XML">
+        </copy>
 
-			<fileset dir="${BoLT.basedir}/WEB-INF/XML" includes="**/*.*" />
+    </target>
 
-		</copy>
 
-	</target>
+    <!-- Copy some other reaoures to appropriate directories -->
 
+    <target name="copyMiscResources">
 
+        <echo>Using global.context.url '${global.context.url}'</echo>
 
-	<!-- Copy some other reaoures to appropriate directories -->
+        <echo>Using local.context.url '${local.context.url}'</echo>
 
-	<target name="copyMiscResources">
 
-		<echo>Using global.context.url '${global.context.url}'</echo>
+        <filterset id="gcu">
 
-		<echo>Using local.context.url '${local.context.url}'</echo> 
+            <filter token="GLOBAL_CONTEXT_URL" value="${global.context.url}"/>
 
-		
+        </filterset>
 
-		<filterset id="gcu">
+        <filterset id="lcu">
 
-			<filter token="GLOBAL_CONTEXT_URL" value="${global.context.url}"/>
+            <filter token="LOCAL_CONTEXT_URL" value="${local.context.url}"/>
 
-		</filterset>	
+        </filterset>
 
-		<filterset id="lcu">
+        <filterset id="csh">
 
-			<filter token="LOCAL_CONTEXT_URL" value="${local.context.url}"/>
+            <filter token="LOCAL_HOST" value="${BoLT.cmsServerHost}"/>
 
-		</filterset>		
+        </filterset>
 
-		<filterset id="csh">
+        <filterset id="csp">
 
-			<filter token="LOCAL_HOST" value="${BoLT.cmsServerHost}"/>
+            <filter token="LOCAL_PORT" value="${BoLT.cmsServerPort}"/>
 
-		</filterset>
+        </filterset>
 
-		<filterset id="csp">
+        <filterset id="csup">
 
-			<filter token="LOCAL_PORT" value="${BoLT.cmsServerPort}"/>
+            <filter token="QUERY_URL_PATH" value="${BoLT.cmsServerUrlPath}"/>
 
-		</filterset>
+        </filterset>
 
-		<filterset id="csup">
+        <filterset id="version">
 
-			<filter token="QUERY_URL_PATH" value="${BoLT.cmsServerUrlPath}"/>
+            <filter token="VERSION" value="${app.version}"/>
 
-		</filterset>
+        </filterset>
 
-		<filterset id="version">
 
-			<filter token="VERSION" value="${app.version}"/>
+        <copy todir="${BoLT.buildBase}/jsapi">
 
-		</filterset>	
+            <fileset dir="${BoLT.basedir}/jsapi">
 
-		
+                <include name="**/*.jsp"/>
 
-		<copy todir="${BoLT.buildBase}/jsapi">
+                <include name="**/*.css"/>
 
-			<fileset dir="${BoLT.basedir}/jsapi">
+                <include name="**/*.js"/>
 
-				<include name="**/*.jsp"/>
+                <include name="**/*.txt"/>
 
-				<include name="**/*.css"/>
+                <include name="**/*.xml"/>
 
-				<include name="**/*.js"/>
+            </fileset>
 
-				<include name="**/*.txt"/>
+            <filterset refid="gcu"/>
 
-				<include name="**/*.xml"/>
+            <filterset refid="lcu"/>
 
-			</fileset>
+            <filterset refid="csh"/>
 
-			<filterset refid="gcu"/>
+            <filterset refid="csp"/>
 
-			<filterset refid="lcu"/>
+            <filterset refid="csup"/>
 
-			<filterset refid="csh"/>
+            <filterset refid="version"/>
 
-			<filterset refid="csp"/>
+        </copy>
 
-			<filterset refid="csup"/>
 
-			<filterset refid="version"/>			
+        <copy todir="${BoLT.buildBase}/jsapi">
 
-		</copy>
+            <fileset dir="${BoLT.basedir}/jsapi" includes="**/*.*"/>
 
-		
+        </copy>
 
-		<copy todir="${BoLT.buildBase}/jsapi">
 
-			<fileset dir="${BoLT.basedir}/jsapi" includes="**/*.*" />
+        <copy todir="${BoLT.buildBase}/docs">
 
-		</copy>		
+            <fileset dir="${BoLT.basedir}/docs">
 
-	
+                <include name="**/*.jsp"/>
 
-		<copy todir="${BoLT.buildBase}/docs">
+                <include name="**/*.css"/>
 
-			<fileset dir="${BoLT.basedir}/docs">
+                <include name="**/*.js"/>
 
-				<include name="**/*.jsp"/>
+                <include name="**/*.txt"/>
 
-				<include name="**/*.css"/>
+                <include name="**/*.xml"/>
 
-				<include name="**/*.js"/>
+                <include name="**/*.opml"/>
 
-				<include name="**/*.txt"/>
+                <include name="**/*.html"/>
 
-				<include name="**/*.xml"/>
+            </fileset>
 
-				<include name="**/*.opml"/>
+            <filterset refid="gcu"/>
 
-				<include name="**/*.html"/>
+            <filterset refid="lcu"/>
 
-			</fileset>
+            <filterset refid="csh"/>
 
-			<filterset refid="gcu"/>
+            <filterset refid="csp"/>
 
-			<filterset refid="lcu"/>
+            <filterset refid="csup"/>
 
-			<filterset refid="csh"/>
+            <filterset refid="version"/>
 
-			<filterset refid="csp"/>
+            <filterset refid="jsapi_url"/>
 
-			<filterset refid="csup"/>
+        </copy>
 
-			<filterset refid="version"/>
 
-			<filterset refid="jsapi_url"/>			
+        <copy todir="${BoLT.buildBase}/docs">
 
-		</copy>
+            <fileset dir="${BoLT.basedir}/docs">
 
-		
+                <include name="**/*.jpg"/>
 
-		<copy todir="${BoLT.buildBase}/docs">
+                <include name="**/*.gif"/>
 
-			<fileset dir="${BoLT.basedir}/docs">
+                <include name="**/*.png"/>
 
-				<include name="**/*.jpg"/>
+            </fileset>
 
-				<include name="**/*.gif"/>
+        </copy>
 
-				<include name="**/*.png"/>
 
-			</fileset>	
+        <copy todir="${BoLT.buildBase}/docs">
 
-		</copy>			
+            <fileset dir="${BoLT.basedir}/docs" includes="**/*"/>
 
+        </copy>
 
 
-		<copy todir="${BoLT.buildBase}/docs">
+        <copy todir="${BoLT.buildBase}/WEB-INF">
 
-			<fileset dir="${BoLT.basedir}/docs" includes="**/*" />
+            <fileset dir="${BoLT.basedir}/WEB-INF">
 
-		</copy>	
+                <include name="**/*.txt"/>
 
-		
+                <include name="**/*.xml"/>
 
-		<copy todir="${BoLT.buildBase}/WEB-INF">
+            </fileset>
 
-			<fileset dir="${BoLT.basedir}/WEB-INF">
+            <filterset refid="version"/>
 
-				<include name="**/*.txt"/>
+        </copy>
 
-				<include name="**/*.xml"/>
 
-			</fileset>
+        <copy todir="${BoLT.buildBase}/WEB-INF">
 
-			<filterset refid="version"/>			
+            <fileset dir="${BoLT.basedir}/WEB-INF" includes="*.*"/>
 
-		</copy>	
+        </copy>
 
-		
 
-		<copy todir="${BoLT.buildBase}/WEB-INF">
+        <copy todir="${BoLT.buildBase}/WEB-INF/tlds">
 
-			<fileset dir="${BoLT.basedir}/WEB-INF" includes="*.*" />
+            <fileset dir="${BoLT.basedir}/WEB-INF/tlds" includes="**/*.*"/>
 
-		</copy>
+        </copy>
 
 
+        <copy todir="${BoLT.buildBase}">
 
-		<copy todir="${BoLT.buildBase}/WEB-INF/tlds">
+            <fileset dir="${BoLT.basedir}" includes="*.wsdl *.xml *.properties *.jsp *.ini"/>
 
-			<fileset dir="${BoLT.basedir}/WEB-INF/tlds" includes="**/*.*" />
+            <filterset>
 
-		</copy>		
+                <filter token="OAI_ADMIN_EMAIL" value="${oai.admin.email}"/>
 
-		
+                <filter token="OAI_VIEW_BASE_URL" value="${oai.view.url}"/>
 
-		<copy todir="${BoLT.buildBase}">
+            </filterset>
 
-			<fileset dir="${BoLT.basedir}" includes="*.wsdl *.xml *.properties *.jsp *.ini" />
+        </copy>
 
-			<filterset>
 
-				<filter token="OAI_ADMIN_EMAIL" value="${oai.admin.email}"/>
+        <copy todir="${BoLT.buildBase}/META-INF">
 
-				<filter token="OAI_VIEW_BASE_URL" value="${oai.view.url}"/>
+            <fileset file="${BoLT.basedir}/${BoLT.contextFile}"/>
 
-			</filterset>			
+        </copy>
 
-		</copy>
+    </target>
 
-		
 
-		<copy todir="${BoLT.buildBase}/META-INF"> 
+    <!-- Deploy the application to the Tomcat webapps directory-->
 
-			<fileset file="${BoLT.basedir}/${BoLT.contextFile}" />
+    <target name="deploy" depends="buildApp" description="Deploy to Tomcat webapps directory">
 
-		</copy>
+        <!-- Copy the contents of the build directory -->
 
-	</target>
+        <mkdir dir="${BoLT.deploy.home}"/>
 
 
+        <copy todir="${BoLT.deploy.home}">
 
-	<!-- Deploy the application to the Tomcat webapps directory-->
+            <fileset dir="${BoLT.buildBase}"/>
 
-	<target name="deploy" depends="buildApp" description="Deploy to Tomcat webapps directory">		
+        </copy>
 
-		<!-- Copy the contents of the build directory --> 
+    </target>
 
-   		<mkdir dir="${BoLT.deploy.home}"/> 
 
+    <!-- Deploy the compiled and configured Concept Map Service to tomcat webapps directory-->
 
+    <target name="deploy-war" depends="war"
+            description="Deploy the SMS to Tomcat via the manager. Please use this task when tomcat is running">
 
-		<copy todir="${BoLT.deploy.home}"> 
+        <echo>Note: This target requires Ant 1.6 or later; Tomcat must be running.</echo>
 
-			<fileset dir="${BoLT.buildBase}" />
+        <deploy url="${BoLT.tomcat.manager.URL}" username="${BoLT.tomcat.username}" password="${BoLT.tomcat.password}"
+                path="/${context.name}" war="${BoLT.distDir}/${context.name}.war"/>
 
-		</copy>
+        <!-- <delete dir="${BoLT.distDir}"/> -->
 
-	</target>
+    </target>
 
-	
 
-	<!-- Deploy the compiled and configured Concept Map Service to tomcat webapps directory-->
+    <!-- Please use this target when tomcat is running -->
 
-	<target name="deploy-war" depends="war" description="Deploy the SMS to Tomcat via the manager. Please use this task when tomcat is running">
+    <target name="undeploy-war"
+            description="Undeploy the SMS in Tomcat via the manager. Please use this target when tomcat is not running">
 
-		<echo>Note: This target requires Ant 1.6 or later; Tomcat must be running.</echo>
+        <echo>Note: This target requires Ant 1.6 or later; Tomcat must be running.</echo>
 
-		<deploy url="${BoLT.tomcat.manager.URL}" username="${BoLT.tomcat.username}" password="${BoLT.tomcat.password}" path="/${context.name}" war="${BoLT.distDir}/${context.name}.war"/>
+        <undeploy url="${BoLT.tomcat.manager.URL}" username="${BoLT.tomcat.username}" password="${BoLT.tomcat.password}"
+                  path="/${context.name}"/>
 
-		<!-- <delete dir="${BoLT.distDir}"/> -->
+        <delete dir="${BoLT.tomcat.home}/work/Catalina/localhost/${context.name}"/>
 
-	</target>
+    </target>
 
-	
 
-	<!-- Please use this target when tomcat is running -->
+    <!-- This target creates web archive file (WAR) file for distributions -->
 
-	<target name="undeploy-war" description="Undeploy the SMS in Tomcat via the manager. Please use this target when tomcat is not running">
+    <target name="war" depends="buildApp" description="Makes a Web Archive File (WAR) for easy distribution">
 
-		<echo>Note: This target requires Ant 1.6 or later; Tomcat must be running.</echo>
+        <mkdir dir="${BoLT.distDir}"/>
 
-		<undeploy url="${BoLT.tomcat.manager.URL}" username="${BoLT.tomcat.username}" password="${BoLT.tomcat.password}" path="/${context.name}"/>
+        <war destfile="${BoLT.distDir}/${context.name}.war"
 
-		<delete dir="${BoLT.tomcat.home}/work/Catalina/localhost/${context.name}"/>
+             basedir="${BoLT.buildBase}"
 
-	</target>
+             webxml="${BoLT.buildBase}/WEB-INF/web.xml"/>
 
 
+        <!-- <delete dir="${BoLT.buildBase}"/> -->
 
-	<!-- This target creates web archive file (WAR) file for distributions -->
+    </target>
 
-	<target name="war" depends="buildApp" description="Makes a Web Archive File (WAR) for easy distribution">
 
-		<mkdir dir="${BoLT.distDir}"/>
+    <!-- Prepare and compile the application to the build directory -->
 
-		<war 	destfile="${BoLT.distDir}/${context.name}.war" 
+    <target name="buildApp"
 
-				basedir="${BoLT.buildBase}" 
+            depends="makeDirectoryStructure,makeJar,copyThirdPartyResources,copyXMLResources,copyMiscResources"
 
-				webxml="${BoLT.buildBase}/WEB-INF/web.xml" />
+            description="Builds the application to the build directory"/>
 
-		
-
-		<!-- <delete dir="${BoLT.buildBase}"/> --> 
-
-	</target>
-
-	
-
-	<!-- Prepare and compile the application to the build directory -->
-
-	<target name="buildApp" 
-
-		depends="makeDirectoryStructure,makeJar,copyThirdPartyResources,copyXMLResources,copyMiscResources" 
-
-		description="Builds the application to the build directory" />
-
-	
-
-	
 
 </project>
 
