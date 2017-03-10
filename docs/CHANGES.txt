@@ -3,6 +3,11 @@ Strand Map Service. Current version @VERSION@
 
 -----------------------------------------------------------------------------
 
+Changes in v1.2.4 (released to production March 9, 2017)
+
+- Moved code from SourceForge to GitHub https://github.com/NCAR/strand-maps-server
+
+
 Changes in v1.2.35 (released to production March 25, 2014)
 
 - Upgraded prototype to 1.7.1.0

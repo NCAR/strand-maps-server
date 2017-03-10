@@ -113,7 +113,7 @@
 
     <!-- The following two properties should be updated below each time a new release or version is issued -->
 
-    <property name="app.version" value="1.2.35"/>
+    <property name="app.version" value="1.2.4"/>
 
     <property name="context.name" value="cms1-2"/>
 
